@@ -1,35 +1,25 @@
 package ProtoType;
 
 import Parkeringsplass.Parkeringsplass;
+import Repo.JSONRepo;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class UserView {
 
@@ -52,7 +42,6 @@ public class UserView {
     private GridPane choosePane;
 
 
-    private ArrayList<RadioButton> velgParkRadio = new ArrayList<>();
     private  Button confirmSelect;
 
     Color[] colors = {
@@ -88,9 +77,8 @@ public class UserView {
             new LinearGradient(0, 0, 1, 0, true, CycleMethod.REPEAT, stops);
 
     //velg parkeringsplass
-    private ArrayList<RadioButton> buttons = new ArrayList<>();
-    private ToggleGroup radioGroup;
-    private RadioButton Tista, hiofR;
+
+    private ArrayList<Parkeringsplass> parkeringsplasser;
 
     public UserView(Stage stage){
         this.stage = stage;
@@ -166,6 +154,7 @@ public class UserView {
         init();
     }
 
+    private JSONRepo repo;
     public void initParkingplasser(){
 
         Haldensentrum = new Parkeringsplass("Halden Tista Sentrum", "Walkers gate 4, 1771 Halden", 24f, 25);
@@ -213,7 +202,21 @@ public class UserView {
         pane.setHgap(5);
         blur.setInput(new ColorAdjust(0,0,0.4,0));
 
+        parkeringsplasser = new ArrayList<Parkeringsplass>();
+        parkeringsplasser.add(Haldensentrum);
+        parkeringsplasser.add(hiof);
+
+        for(int i=0; i < parkeringsplasser.size(); i++){
+            System.out.println(parkeringsplasser.get(i).toString());
+        }
+
+        repo = new JSONRepo();
+        //repo.WriteToJSON("parkeringsplasser.json", parkeringsplasser);
+
+
         velgPark();
+    /*
+
         confirmSelect.setOnAction(action ->{
 
             if(radioGroup.getSelectedToggle() == Tista){
@@ -347,7 +350,7 @@ public class UserView {
 
         });
 
-
+*/
 
 
 
@@ -355,28 +358,38 @@ public class UserView {
 
     }
 
+    private ArrayList<RadioButton> buttons = new ArrayList<>();
+    private ToggleGroup radioGroup;
+    private RadioButton Tista, hiofR;
+    private ArrayList<RadioButton> velgParkRadio = new ArrayList<>();
+
 
     public void velgPark(){
-
+        parkeringsplasser = repo.LoadFile("parkeringsplasser.json");
+        radioGroup = new ToggleGroup();
+        HBox radioBox = new HBox();
         Text text = new Text("ParkeringSteder I Naerheten");
         text.setStyle("-fx-font-size: 30px; -fx-background-color: gray; -fx-border-color: black; -fx-border-width: 2px");
         text.setX(400);
         text.setY(200);
         text.toFront();
+        for(int i=0; i < parkeringsplasser.size(); i++){
 
-        Tista = new RadioButton(Haldensentrum.getParkeringnavn());
+            RadioButton radioButtoni = new RadioButton(parkeringsplasser.get(i).getParkeringnavn());
+            buttons.add(radioButtoni);
+            radioButtoni.setToggleGroup(radioGroup);
+            radioBox.getChildren().add(radioButtoni);
+            velgParkRadio.add(radioButtoni);
+            choosePane.add(radioButtoni, i , 0);
 
-        hiofR = new RadioButton(hiof.getParkeringnavn());
-        velgParkRadio.add(Tista);
-        velgParkRadio.add(hiofR);
+        }
 
 
-        HBox radioBox = new HBox();
-        radioBox.getChildren().addAll(Tista, hiofR);
+        container.getChildren().add(text);
 
-        radioGroup = new ToggleGroup();
-        Tista.setToggleGroup(radioGroup);
-        hiofR.setToggleGroup(radioGroup);
+
+
+
          confirmSelect = new Button("Confirm");
 
         ImageView TistaImg = new ImageView(new Image("https://tellusdmsmedia.newmindmedia.com/wsimgs/18983398_10156189404679307_1537015086_n_781050600.jpg"));
@@ -392,12 +405,7 @@ public class UserView {
         choosePane.setPadding(new Insets(20,20,20,20));
 
 
-        container.getChildren().add(text);
-        choosePane.add(TistaImg, 0,1);
-        choosePane.add(hiofImg, 1,1);
 
-        choosePane.add(Tista, 0,2);
-        choosePane.add(hiofR, 1,2);
 
         choosePane.add(confirmSelect, 0,3);
 

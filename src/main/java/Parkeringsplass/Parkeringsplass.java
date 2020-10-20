@@ -6,11 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type")
-
 
 public class Parkeringsplass {
 
@@ -19,8 +14,6 @@ public class Parkeringsplass {
     private float pris;
     private String parkeringnavn;
 
-
-    @JsonIgnore
     public Parkeringsplass(String parkeringnavn, String adresse, float pris, int plasser ){
         this.parkeringnavn = parkeringnavn;
         this.adresse = adresse;
@@ -62,6 +55,7 @@ public class Parkeringsplass {
         this.parkeringnavn = parkeringnavn;
     }
 
+    @JsonIgnore
     @Override
     public String toString(){
         return new String("Parkering's navn: " + getParkeringnavn()+ "\n" +

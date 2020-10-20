@@ -1,0 +1,11 @@
+[ {
+  "plasser" : 25,
+  "adresse" : "Walkers gate 4, 1771 Halden",
+  "pris" : 24.0,
+  "parkeringnavn" : "Halden Tista Sentrum"
+}, {
+  "plasser" : 50,
+  "adresse" : "B R A Veien 4, 1757 Halden",
+  "pris" : 30.0,
+  "parkeringnavn" : "Hogskolen i Ostfold"
+}]
