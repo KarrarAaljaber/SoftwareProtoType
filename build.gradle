@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.5'
+}
+
+group 'ProtoType.LaunchProtoType'
+version '1.0-SNAPSHOT'
+
+javafx {
+    version = "13"
+    modules = [ 'javafx.controls' ]
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.0.rc1'
+
+}
+mainClassName = 'ProtoType.LaunchProtoType'

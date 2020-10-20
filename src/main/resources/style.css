@@ -1,0 +1,119 @@
+*{
+    -fx-font : 14px "serief";
+}
+#text{
+    -fx-font-size: 14px;
+    -fx-font-style:   italic;
+    -fx-font-weight: 900;
+    -fx-opacity: 1;
+
+}
+#choosePane{
+    -fx-border-color: black;
+
+    -fx-border-width: 3px;
+    -fx-background-color: linear-gradient(darkgray,  lightgray);
+
+
+
+
+}
+#infoPane{
+    -fx-opacity: 0.70;
+
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-background-color: linear-gradient( cornflowerblue, #00d6bd);
+
+}
+
+#goback{
+    -fx-background-image: url("https://img.favpng.com/10/14/15/logo-brand-png-favpng-7Wg1xQ19SFQxDWvfqkHxb6iSR.jpg");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+
+    -fx-opacity: 0.5;
+
+    -fx-border-width: 2;
+}
+
+#goback:hover{
+    -fx-opacity: 1;
+}
+#viewPane{
+
+
+    -fx-background-color: linear-gradient( cornflowerblue, #00d6bd);
+    -fx-opacity: 0.99;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+
+}
+#parkChooseImg{
+
+
+
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+#backnode{
+    -fx-background-image: url("https://www.shareicon.net/data/512x512/2015/11/06/667871_circle_512x512.png");
+    -fx-background-size: 50px, 50px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-radius: 30;
+
+}
+
+#parkImg{
+
+    -fx-opacity: 0.7;
+
+    -fx-background-image: url("https://pngimg.com/uploads/parking/parking_PNG6.png");
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+
+
+    -fx-border-width: 2;
+
+
+}
+#parkImg:hover{
+    -fx-opacity: 1;
+    -fx-border-color: black;
+    -fx-border-width: 4;
+}
+
+#grid{
+    -fx-background-image: url("https://www.diakonhjemmet.no/site/assets/files/1350/parkering_2017.jpg");
+}
+#boxes{
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+}
+
+#nameL{
+    -fx-font: 100px Tahoma;
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%);
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+}
+#passL{
+    -fx-font: 100px Tahoma;
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%);
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+
+}
+#root {
+    -fx-background-color: #8d0505;
+    -fx-background-size: cover;
+}
+
+#hbox{
+    -fx-border-width: 5px;
+    -fx-border-color: red;
+    -fx-tile-alignment: center;
+}
