@@ -91,7 +91,7 @@ public class LaunchProtoType extends Application {
         login.setOnAction(action ->{
 
 
-            if( radioGroup.getSelectedToggle().equals(no))  {
+            if( radioGroup.getSelectedToggle().equals(no) && name.getText().equals("Test") && pass.getText().equals("Test"))  {
                 System.out.println("CORrect");
                 text.setVisible(false);
 
