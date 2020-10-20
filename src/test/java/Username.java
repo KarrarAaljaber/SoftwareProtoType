@@ -7,8 +7,6 @@ public class Username {
     @Test
     public void testUsername(){
 
-        Assert.assertFalse(user.getNavn(), );
-
-
+        
     }
 }
