@@ -5,7 +5,7 @@ public class Konto {
 
     private String navn, passord;
 
-
+    public Konto(){}
     public Konto(String navn, String passord){
         this.navn = navn;
         this.passord = passord;

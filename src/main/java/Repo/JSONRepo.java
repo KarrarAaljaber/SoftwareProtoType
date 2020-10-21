@@ -1,5 +1,6 @@
 package Repo;
 
+import KontoInformasjon.Konto;
 import Parkeringsplass.Parkeringsplass;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -20,6 +21,39 @@ public class JSONRepo implements CRUD {
 
     private ObjectMapper obj =new ObjectMapper();
     private ArrayList<Parkeringsplass> parkeringsplasser = new ArrayList<>();
+    private ArrayList<Konto> kontoer = new ArrayList<>();
+
+
+    public ArrayList<Konto> LoadFile2(String s){
+        try{
+            Konto[] kontos = obj.readValue(new File(s), Konto[].class);
+
+            kontoer.addAll(Arrays.asList(kontos));
+
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return kontoer;
+    }
+    public void WriteToJSON2(String fileName, ArrayList<Konto> konto){
+        try{
+            File file = new File(fileName);
+            obj.registerModule(new JavaTimeModule());
+            obj.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            obj.writerWithDefaultPrettyPrinter().writeValue(file, konto);
+
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public ArrayList<Parkeringsplass> LoadFile(String s){
@@ -57,7 +91,7 @@ public class JSONRepo implements CRUD {
     public ArrayList<Parkeringsplass>getObservationsList(){
         return parkeringsplasser;
     }
-
+    public ArrayList<Konto> getKontoer(){return kontoer;}
   /*
     @Override
     public ArrayList<Observation> addObservation(int ID, String name, Animals animals, Location location, String discoveredTime, int amountFound, String pictureUrl, String comment) {

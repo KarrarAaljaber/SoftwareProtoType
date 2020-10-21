@@ -5,6 +5,7 @@ package Parkeringsplass;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.junit.jupiter.params.ParameterizedTest;
 
 
 public class Parkeringsplass {
@@ -14,6 +15,7 @@ public class Parkeringsplass {
     private float pris;
     private String parkeringnavn;
 
+    public Parkeringsplass(){}
     public Parkeringsplass(String parkeringnavn, String adresse, float pris, int plasser ){
         this.parkeringnavn = parkeringnavn;
         this.adresse = adresse;

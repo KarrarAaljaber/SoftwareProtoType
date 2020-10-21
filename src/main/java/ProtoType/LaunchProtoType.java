@@ -1,5 +1,7 @@
 package ProtoType;
 
+import KontoInformasjon.Konto;
+import Repo.JSONRepo;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -15,12 +17,17 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.ArrayList;
+
 public class LaunchProtoType extends Application {
 
-
-
+    Konto Test = new Konto("Name", "passord");
+    JSONRepo rep = new JSONRepo();
+    ArrayList<Konto> KontoList = new ArrayList<>();
     public LaunchProtoType(){
-
+        KontoList.add(Test);
+        KontoList = rep.LoadFile2("Konto.json");
+        //rep.WriteToJSON2("Konto.json",KontoList);
     }
 
     @Override
@@ -90,18 +97,20 @@ public class LaunchProtoType extends Application {
 
         login.setOnAction(action ->{
 
-
-            if( radioGroup.getSelectedToggle().equals(no) && name.getText().equals("Test") && pass.getText().equals("Test"))  {
+        for (int i =0; i<KontoList.size(); i++) {
+            if(KontoList.get(i) == (new Konto(name.getText() , pass.getText()))){
+            //if (radioGroup.getSelectedToggle().equals(no) && name.getText().equals("Test") && pass.getText().equals("Test")) {
                 System.out.println("CORrect");
+
                 text.setVisible(false);
 
                 UserView view = new UserView(stage);
 
 
-            }else{
+            } else {
                 text.setVisible(true);
             }
-
+        }
 
         });
 
