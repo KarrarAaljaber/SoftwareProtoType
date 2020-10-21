@@ -11,6 +11,28 @@ public class Username {
     Konto user = new Konto();
     ArrayList<Konto> KontoList = new ArrayList<>();
     JSONRepo konto = new JSONRepo();
+
+    @Test
+    public void KontoFinnes(){
+        KontoList = konto.LoadFile2("Konto.json");
+        user.setNavn("Aleks");
+        user.setPassord("123");
+        boolean t = false;
+        for (Konto value : KontoList) {
+            if (user.getNavn().equals(value.getNavn()) && user.getPassord().equals(value.getPassord())) {
+                t = true;
+                Assert.assertTrue("Konto finnes", t);
+                System.out.println("Konto " + user.getNavn() + " med passord " + user.getPassord() + " finnes!");
+                break;
+            }
+        }
+        if(!t) {
+            Assert.fail("Konto finnes ikke");
+        }
+    }
+
+
+
     @ParameterizedTest
     @ValueSource(strings = {"Yaqub","bag","Test","Gay","SSs"})
     public void testUsername(String input) {
