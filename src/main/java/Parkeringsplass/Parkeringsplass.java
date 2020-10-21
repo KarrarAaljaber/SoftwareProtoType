@@ -15,7 +15,6 @@ public class Parkeringsplass {
     private float pris;
     private String parkeringnavn;
 
-    public Parkeringsplass(){}
     public Parkeringsplass(String parkeringnavn, String adresse, float pris, int plasser ){
         this.parkeringnavn = parkeringnavn;
         this.adresse = adresse;
@@ -23,6 +22,9 @@ public class Parkeringsplass {
         this.plasser = plasser;
     }
 
+    public Parkeringsplass(){
+
+    }
 
 
     public int getPlasser() {

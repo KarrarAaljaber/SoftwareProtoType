@@ -98,10 +98,8 @@ public class LaunchProtoType extends Application {
         login.setOnAction(action ->{
 
         for (int i =0; i<KontoList.size(); i++) {
-            if(KontoList.get(i) == (new Konto(name.getText() , pass.getText()))){
-            //if (radioGroup.getSelectedToggle().equals(no) && name.getText().equals("Test") && pass.getText().equals("Test")) {
+            if(  name.getText().equals(KontoList.get(i).getNavn()) &&  pass.getText().equals(KontoList.get(i).getPassord())){
                 System.out.println("CORrect");
-
                 text.setVisible(false);
 
                 UserView view = new UserView(stage);

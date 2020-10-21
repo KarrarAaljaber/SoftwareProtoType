@@ -3,6 +3,8 @@ package ProtoType;
 import Parkeringsplass.Parkeringsplass;
 import Repo.JSONRepo;
 import javafx.animation.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -80,6 +82,11 @@ public class UserView {
 
     private ArrayList<Parkeringsplass> parkeringsplasser;
 
+    private ArrayList<RadioButton> buttons = new ArrayList<>();
+    private ToggleGroup radioGroup;
+    private RadioButton Tista, hiofR;
+    private ArrayList<RadioButton> velgParkRadio = new ArrayList<>();
+
     public UserView(Stage stage){
         this.stage = stage;
 
@@ -90,14 +97,12 @@ public class UserView {
         choosePane = new GridPane();
         bestillingPane= new GridPane();
 
-
         infoPane = new GridPane();
         infoPane.setId("infoPane");
         infoPane.setAlignment(Pos.TOP_CENTER);
         infoPane.setMaxHeight(200);
         infoPane.setMaxWidth(400);
         infoPane.setMinWidth(200);
-
         infoPane.setTranslateX(-450);
         infoPane.setVgap(5);
         infoPane.setHgap(5);
@@ -111,9 +116,6 @@ public class UserView {
         bestillingPane.setTranslateX(500);
         bestillingPane.setVgap(5);
         bestillingPane.setHgap(5);
-
-
-
 
 
 
@@ -156,215 +158,137 @@ public class UserView {
 
     private JSONRepo repo;
     public void initParkingplasser(){
+        parkeringsplasser = new ArrayList<>();
 
-        Haldensentrum = new Parkeringsplass("Halden Tista Sentrum", "Walkers gate 4, 1771 Halden", 24f, 25);
-       // parkButtons= new Button[Haldensentrum.getPlasser() / 5][Haldensentrum.getPlasser() / 5];
+        repo = new JSONRepo();
+        //  repo.WriteToJSON("parkeringsplasser.json", parkeringsplasser);
+        velgPark();
 
-
-        Text ParkeringsNavn = new Text("ParkeringsNavn: " + Haldensentrum.getParkeringnavn());
-        ParkeringsNavn.setId("text");
-        ParkeringsNavn.setWrappingWidth(wrapW);
-
-
-        Text adresse = new Text("Adresse: " + Haldensentrum.getAdresse());
-        adresse.setId("text");
-        adresse.setWrappingWidth(wrapW);
-
-        Text pris = new Text("Pris Per Time: " + Haldensentrum.getPris());
-        pris.setId("text");
-        pris.setWrappingWidth(wrapW);
-
-        Text LedigePlasser = new Text("Antall Ledige Plasser: " + Haldensentrum.getPlasser());
-        LedigePlasser.setId("text");
-        LedigePlasser.setWrappingWidth(wrapW);
+        ArrayList<Text> parkeringsnavner = new ArrayList<>();
+        ArrayList<Text> adresser = new ArrayList<>();
+        ArrayList<Text> priser = new ArrayList<>();
+        ArrayList<Text> ledigplasser = new ArrayList<>();
 
 
-        hiof = new Parkeringsplass("Hogskolen i Ostfold", "B R A Veien 4, 1757 Halden", 30f, 50);
 
-        Text ParkeringsNavn2 = new Text("ParkeringsNavn: " + hiof.getParkeringnavn());
-        ParkeringsNavn2.setId("text");
-        ParkeringsNavn2.setWrappingWidth(wrapW);
+        //laster opp de forskjellige parkeringsplassene
+        for(int i=0; i < parkeringsplasser.size(); i++){
+            Text ParkeringsNavni = new Text("ParkeringsNavn: " + parkeringsplasser.get(i).getParkeringnavn());
+            ParkeringsNavni.setId("text");
+            ParkeringsNavni.setWrappingWidth(wrapW);
+            parkeringsnavner.add(ParkeringsNavni);
 
-        Text adresse2 = new Text("Adresse: " + hiof.getAdresse());
-        adresse2.setId("text");
-        adresse2.setWrappingWidth(wrapW);
+            Text adressei = new Text("Adresse: " + parkeringsplasser.get(i).getAdresse());
+            adressei.setId("text");
+            adressei.setWrappingWidth(wrapW);
+            adresser.add(adressei);
 
-        Text pris2 = new Text("Pris Per Time: " + hiof.getPris());
-        pris2.setId("text");
-        pris2.setWrappingWidth(wrapW);
+            Text prisi = new Text("Pris Per Time: " + parkeringsplasser.get(i).getPris());
+            prisi.setId("text");
+            prisi.setWrappingWidth(wrapW);
+            priser.add(prisi);
 
-        Text LedigePlasser2 = new Text("Antall Ledige Plasser: " + hiof.getPlasser());
-        LedigePlasser2.setId("text");
-        LedigePlasser2.setWrappingWidth(wrapW);
+            Text LedigePlasseri = new Text("Antall Ledige Plasser: " + parkeringsplasser.get(i).getPlasser());
+            LedigePlasseri.setId("text");
+            LedigePlasseri.setWrappingWidth(wrapW);
+            ledigplasser.add(LedigePlasseri);
+
+        }
+
+
+
 
 
         pane.setVgap(5);
         pane.setHgap(5);
         blur.setInput(new ColorAdjust(0,0,0.4,0));
 
-        parkeringsplasser = new ArrayList<Parkeringsplass>();
-        parkeringsplasser.add(Haldensentrum);
-        parkeringsplasser.add(hiof);
+
 
         for(int i=0; i < parkeringsplasser.size(); i++){
             System.out.println(parkeringsplasser.get(i).toString());
         }
 
-        repo = new JSONRepo();
-        //repo.WriteToJSON("parkeringsplasser.json", parkeringsplasser);
 
 
-        velgPark();
-    /*
 
-        confirmSelect.setOnAction(action ->{
+        confirmSelect.setOnAction(action -> {
 
-            if(radioGroup.getSelectedToggle() == Tista){
-                valgt = ValgtParkeringPlass.tista;
-                infoPane.getChildren().clear();
-                pane.getChildren().clear();
+            for (int x = 0; x < buttons.size(); x++) {
+                if (radioGroup.getSelectedToggle() == buttons.get(x)) {
+                    valgt = ValgtParkeringPlass.tista;
+                    infoPane.getChildren().clear();
+                    pane.getChildren().clear();
 
-                infoPane.setVisible(true);
-                pane.setVisible(true);
-                choosePane.setVisible(false);
-                bestillingPane.setVisible(false);
+                    infoPane.setVisible(true);
+                    pane.setVisible(true);
+                    choosePane.setVisible(false);
+                    bestillingPane.setVisible(false);
 
-                infoPane.add(ParkeringsNavn, 0,0);
-                infoPane.add(adresse, 0,1);
-                infoPane.add(pris, 0,2);
-                infoPane.add(LedigePlasser, 0,3);
-                parkButtons = new Button[Haldensentrum.getPlasser()][Haldensentrum.getPlasser()];
-                parkButtonsBool = new Boolean[Haldensentrum.getPlasser()][Haldensentrum.getPlasser()];
+                    infoPane.add(parkeringsnavner.get(x), 0, 0);
+                    infoPane.add(adresser.get(x), 0, 1);
+                    infoPane.add(priser.get(x), 0, 2);
+                    infoPane.add(ledigplasser.get(x), 0, 3);
+                    parkButtons = new Button[parkeringsplasser.get(x).getPlasser()][parkeringsplasser.get(x).getPlasser()];
+                    parkButtonsBool = new Boolean[parkeringsplasser.get(x).getPlasser()][parkeringsplasser.get(x).getPlasser()];
 
-                for(int i=1; i <=Haldensentrum.getPlasser() / 5  ; i++ ){
-                    for(int j=1; j <= Haldensentrum.getPlasser() / 5; j++){
-                        int finalI = i;
-                        int finalJ = j;
-                        parkButtons[i][j] = new Button();
-                        parkButtonsBool[i][j] = false;
-                        parkButtons[i][j].setText("Bestill nr" + j * i ) ;
-                        parkButtons[i][j].setPrefSize(200, 100);
-                        parkButtons[i][j].setId("parkImg");
-                        pane.add(parkButtons[i][j], j, i);
+                    for (int i = 1; i <= parkeringsplasser.get(x).getPlasser() / 5; i++) {
+                        for (int j = 1; j <= parkeringsplasser.get(x).getPlasser() / 5; j++) {
+                            int finalI = i;
+                            int finalJ = j;
+                            parkButtons[i][j] = new Button();
+                            parkButtonsBool[i][j] = false;
+                            parkButtons[i][j].setText("Bestill nr" + j * i);
+                            parkButtons[i][j].setPrefSize(200, 100);
+                            parkButtons[i][j].setId("parkImg");
+                            pane.add(parkButtons[i][j], j, i);
 
-                        parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent event) {
-                                parkButtonsBool[finalI][finalJ] = false;
-                                bestillingPane.setVisible(true);
-                                parkButtons[finalI][finalJ].setDisable(true);
+                            parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    //parkButtonsBool[finalI][finalJ] = false;
+                                    bestillingPane.setVisible(true);
 
-                            }
-                        });
+                                    //parkButtons[finalI][finalJ].setDisable(true);
 
+                                }
+                            });
+
+                        }
                     }
+
+                    Button goBack = new Button();
+                    goBack.setId("goback");
+                    goBack.setPrefSize(50, 50);
+
+                    infoPane.add(goBack, 1, 2);
+
+
+                    goBack.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            infoPane.setVisible(false);
+                            bestillingPane.setVisible(false);
+                            pane.setVisible(false);
+                            choosePane.setVisible(true);
+                            parkButtons = new Button[0][0];
+                        }
+
+
+                    });
+
                 }
-
-                Button goBack = new Button();
-                goBack.setId("goback");
-                goBack.setPrefSize(50,50);
-
-                infoPane.add(goBack, 1,2);
-
-
-                goBack.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        infoPane.setVisible(false);
-                        bestillingPane.setVisible(false);
-                        pane.setVisible(false);
-                        choosePane.setVisible(true);
-                        parkButtons = new Button[0][0];
-                    }
-
-
-                });
-
-
-            }else if(radioGroup.getSelectedToggle() == hiofR ){
-                valgt = ValgtParkeringPlass.hiof;
-
-                infoPane.getChildren().clear();
-                pane.getChildren().clear();
-                infoPane.setVisible(true);
-                pane.setVisible(true);
-
-                bestillingPane.setVisible(false);
-                choosePane.setVisible(false);
-
-                infoPane.add(ParkeringsNavn2, 0,0);
-                infoPane.add(adresse2, 1,0);
-                infoPane.add(pris2, 0,1);
-                infoPane.add(LedigePlasser2, 1,1);
-
-              parkButtons = new Button[hiof.getPlasser()][hiof.getPlasser()];
-                parkButtonsBool = new Boolean[hiof.getPlasser()][hiof.getPlasser()];
-
-                for(int i=0; i <hiof.getPlasser() / 5 ; i++ ){
-                    for(int j=0; j < hiof.getPlasser() / 5; j++){
-                        int finalI = i;
-                        int finalJ = j;
-                        parkButtons[i][j] = new Button();
-                        parkButtonsBool[i][j] = false;
-                        parkButtons[i][j].setPrefSize(100, 100);
-
-
-                        parkButtons[i][j].setId("parkImg");
-                        pane.add(parkButtons[i][j], j, i);
-
-                        parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent event) {
-                                parkButtonsBool[finalI][finalJ] = false;
-                                parkButtons[finalI][finalJ].setStyle("-fx-background-color: red");
-                                bestillingPane.setVisible(true);
-                                parkButtons[finalI][finalJ].setDisable(true);
-
-                            }
-                        });
-
-                    }
-                }
-                Button goBack = new Button();
-                goBack.setId("goback");
-                goBack.setPrefSize(50,50);
-
-                infoPane.add(goBack, 1,2);
-
-
-
-                goBack.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        infoPane.setVisible(false);
-                        bestillingPane.setVisible(false);
-                        pane.setVisible(false);
-                        choosePane.setVisible(true);
-                        parkButtons = new Button[0][0];
-
-                    }
-
-
-                });
             }
 
-        });
 
-*/
-
-
-
-
+            });
 
     }
 
-    private ArrayList<RadioButton> buttons = new ArrayList<>();
-    private ToggleGroup radioGroup;
-    private RadioButton Tista, hiofR;
-    private ArrayList<RadioButton> velgParkRadio = new ArrayList<>();
 
 
     public void velgPark(){
+        //laster opp parkeringsplassene fra en json fil
         parkeringsplasser = repo.LoadFile("parkeringsplasser.json");
         radioGroup = new ToggleGroup();
         HBox radioBox = new HBox();
@@ -373,6 +297,9 @@ public class UserView {
         text.setX(400);
         text.setY(200);
         text.toFront();
+        container.getChildren().add(text);
+
+        //lager en radiobutton for hvert parkeringsplass
         for(int i=0; i < parkeringsplasser.size(); i++){
 
             RadioButton radioButtoni = new RadioButton(parkeringsplasser.get(i).getParkeringnavn());
@@ -381,49 +308,23 @@ public class UserView {
             radioBox.getChildren().add(radioButtoni);
             velgParkRadio.add(radioButtoni);
             choosePane.add(radioButtoni, i , 0);
+        /*    ImageView TistaImg = new ImageView(new Image("https://tellusdmsmedia.newmindmedia.com/wsimgs/18983398_10156189404679307_1537015086_n_781050600.jpg"));
+            TistaImg.setFitWidth(200);
+            TistaImg.setFitHeight(200);
+            TistaImg.setId("parkChooseImg");*/
 
         }
 
-
-        container.getChildren().add(text);
-
-
-
-
-         confirmSelect = new Button("Confirm");
-
-        ImageView TistaImg = new ImageView(new Image("https://tellusdmsmedia.newmindmedia.com/wsimgs/18983398_10156189404679307_1537015086_n_781050600.jpg"));
-        TistaImg.setFitWidth(200);
-        TistaImg.setFitHeight(200);
-        TistaImg.setId("parkChooseImg");
-
-        ImageView hiofImg = new ImageView(new Image("https://upload.wikimedia.org/wikipedia/commons/c/c0/Hogskolesenteretihalden.jpg"));
-        hiofImg.setFitWidth(200);
-        hiofImg.setFitHeight(200);
-        hiofImg.setId("parkChooseImg");
-
+        confirmSelect = new Button("Confirm");
+        choosePane.add(confirmSelect, 0,3);
         choosePane.setPadding(new Insets(20,20,20,20));
 
-
-
-
-        choosePane.add(confirmSelect, 0,3);
-
     }
-
-
 
     public void init(){
         pane.setAlignment(Pos.CENTER);
         pane.setId("viewPane");
-
-
-
-
-
         scene.getStylesheets().add("style.css");
-
-
     }
 
 
@@ -486,19 +387,12 @@ public class UserView {
         transition.setAutoReverse(true);
         node.setEffect(lights[(int)(Math.random() * 2)]);
 
-
         transition.setCycleCount(Animation.INDEFINITE);
         transition.setNode(node);
-
         transition.play();
-
-
         container.getChildren().add(node);
 
-
     }
-
-
 
 
     public Scene getScene(){return scene;}
