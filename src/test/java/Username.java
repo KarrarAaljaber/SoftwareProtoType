@@ -12,37 +12,26 @@ public class Username {
     ArrayList<Konto> KontoList = new ArrayList<>();
     JSONRepo konto = new JSONRepo();
 
-
-
-
-
     @ParameterizedTest
-    @ValueSource(strings = {"Yaqub","bag","Test","Gay","SSs"})
+    @ValueSource(strings = {"Yaqub","Aleks","Robin","kar","SSs"})
     public void testUsername(String input) {
         KontoList = konto.LoadFile2("Konto.json");
-        boolean t;
+        boolean t = false;
         for (Konto value : KontoList) {
             user.setNavn(input);
-            t = value.getNavn().equals(input);
-            //System.out.println(value.getNavn() + " and " + input + " is " + t);
-            if(t){
 
+            //System.out.println(value.getNavn() + " and " + input + " is " + t);
+            if(value.getNavn().equals(input)){
+                t = true;
                 Assert.assertEquals(value.getNavn(), user.getNavn());
                 System.out.println("Username " + user.getNavn() + " exists");
                 break;
-            }
-            else{
-                Assert.assertFalse(false);
-                //System.out.println("Username " + user.getNavn() + " does not exist");
                 }
             }
-        //System.out.println(input);
-
+        if(!t){
+            Assert.assertFalse(false);
+            System.out.println("Username " + user.getNavn() + " does not exist");
         }
-
-
-
-        //System.out.println(input);
-
+    }
 }
 

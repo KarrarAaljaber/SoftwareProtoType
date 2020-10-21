@@ -15,20 +15,21 @@ public class Password {
     @ValueSource(strings = {"123", "bag", "Test", "Gay", "SSs"})
     public void testPassword(String pass) {
         KontoList = konto.LoadFile2("Konto.json");
-        boolean t;
+        boolean t = false;
         for (Konto value : KontoList) {
             user.setPassord(pass);
-            t = value.getPassord().equals(pass);
-            //System.out.println(value.getNavn() + " and " + input + " is " + t);
-            if (t) {
 
+            //System.out.println(value.getNavn() + " and " + input + " is " + t);
+            if (value.getPassord().equals(pass)) {
+                t = true;
                 Assert.assertEquals(value.getPassord(), user.getPassord());
                 System.out.println("Password " + user.getPassord() + " exists");
                 break;
-            } else {
-                Assert.assertFalse(false);
-                //System.out.println("Username " + user.getNavn() + " does not exist");
             }
+        }
+        if(!t) {
+            Assert.assertFalse(false);
+            System.out.println("Password " + user.getPassord() + " does not exist");
         }
     }
 }
