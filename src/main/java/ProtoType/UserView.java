@@ -16,11 +16,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class UserView {
@@ -243,13 +245,16 @@ public class UserView {
                             parkButtons[i][j].setId("parkImg");
                             pane.add(parkButtons[i][j], j, i);
 
+                            int finalX = x;
                             parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
                                     //parkButtonsBool[finalI][finalJ] = false;
-                                    bestillingPane.setVisible(true);
+                               //     bestillingPane.setVisible(true);
 
                                     //parkButtons[finalI][finalJ].setDisable(true);
+                                BestillingView bv = new BestillingView(parkeringsnavner.get(finalX), new Text(parkButtons[finalI][finalJ].getText()));
+                                stage.setScene(bv.getScene());
 
                                 }
                             });
