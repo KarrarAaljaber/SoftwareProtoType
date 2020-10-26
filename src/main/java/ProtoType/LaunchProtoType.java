@@ -102,7 +102,8 @@ public class LaunchProtoType extends Application {
                 System.out.println("CORrect");
                 text.setVisible(false);
 
-                UserView view = new UserView(stage);
+                VelgParkeringsPlass vp = new VelgParkeringsPlass(stage);
+                stage.setScene(vp.getScene());
 
 
             } else {
