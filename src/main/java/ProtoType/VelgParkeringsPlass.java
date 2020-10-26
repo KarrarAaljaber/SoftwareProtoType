@@ -113,6 +113,7 @@ public class VelgParkeringsPlass {
         scene = new Scene(root, 1280, 720);
 
         scene.getStylesheets().add("style.css");
+        stage.setScene(scene);
 
         initParkingplasser();
         initPaneBakgrunn();
@@ -166,80 +167,7 @@ public class VelgParkeringsPlass {
 
         confirmSelect.setOnAction(action -> {
             UserView view = new UserView(stage, this);
-
-
-
-
-           /* for (int x = 0; x < buttons.size(); x++) {
-                if (radioGroup.getSelectedToggle() == buttons.get(x)) {
-                    valgt = UserView.ValgtParkeringPlass.tista;
-                    infoPane.getChildren().clear();
-                    pane.getChildren().clear();
-
-                    infoPane.setVisible(true);
-                    pane.setVisible(true);
-                    choosePane.setVisible(false);
-                    bestillingPane.setVisible(false);
-
-                    infoPane.add(parkeringsnavner.get(x), 0, 0);
-                    infoPane.add(adresser.get(x), 0, 1);
-                    infoPane.add(priser.get(x), 0, 2);
-                    infoPane.add(ledigplasser.get(x), 0, 3);
-                    parkButtons = new Button[parkeringsplasser.get(x).getPlasser()][parkeringsplasser.get(x).getPlasser()];
-                    parkButtonsBool = new Boolean[parkeringsplasser.get(x).getPlasser()][parkeringsplasser.get(x).getPlasser()];
-
-                    for (int i = 1; i <= parkeringsplasser.get(x).getPlasser() / 5; i++) {
-                        for (int j = 1; j <= parkeringsplasser.get(x).getPlasser() / 5; j++) {
-                            int finalI = i;
-                            int finalJ = j;
-                            parkButtons[i][j] = new Button();
-                            parkButtonsBool[i][j] = false;
-                            parkButtons[i][j].setText("Bestill nr" + j * i);
-                            parkButtons[i][j].setPrefSize(200, 100);
-                            parkButtons[i][j].setId("parkImg");
-                            pane.add(parkButtons[i][j], j, i);
-
-                            int finalX = x;
-                            parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                    //parkButtonsBool[finalI][finalJ] = false;
-                                    //     bestillingPane.setVisible(true);
-
-                                    //parkButtons[finalI][finalJ].setDisable(true);
-                                    BestillingView bv = new BestillingView(parkeringsnavner.get(finalX), new Text(parkButtons[finalI][finalJ].getText()));
-                                    stage.setScene(bv.getScene());
-
-                                }
-                            });
-
-                        }
-                    }
-
-                    Button goBack = new Button();
-                    goBack.setId("goback");
-                    goBack.setPrefSize(50, 50);
-
-                    infoPane.add(goBack, 1, 2);
-
-
-                    goBack.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            infoPane.setVisible(false);
-                            bestillingPane.setVisible(false);
-                            pane.setVisible(false);
-                            choosePane.setVisible(true);
-                            parkButtons = new Button[0][0];
-                        }
-
-
-                    });
-
-                }
-            }
-        */
-
+            view.visParkeringsplass();
         });
 
     }

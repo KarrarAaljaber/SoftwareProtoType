@@ -29,16 +29,15 @@ import java.util.ArrayList;
 public class UserView {
 
     private Scene scene;
-    private GridPane pane;
+    private GridPane buttonspane;
 
     private Stage stage;
 
-    private Pane container;
+    private Pane backgroundContainer;
 
     private StackPane root;
 
     private GridPane infoPane;
-    private GridPane choosePane;
 
 
 
@@ -76,77 +75,59 @@ public class UserView {
         this.stage = stage;
 
         root = new StackPane();
-        pane = new GridPane();
-        container = new Pane();
+        buttonspane = new GridPane();
+        backgroundContainer = new Pane();
         infoPane = new GridPane();
 
         infoPane = new GridPane();
         infoPane.setId("infoPane");
-        infoPane.setAlignment(Pos.TOP_CENTER);
         infoPane.setMaxHeight(200);
         infoPane.setMaxWidth(400);
         infoPane.setMinWidth(200);
-        infoPane.setTranslateX(-450);
+        infoPane.setAlignment(Pos.CENTER_LEFT);
         infoPane.setVgap(5);
         infoPane.setHgap(5);
 
 
 
+        backgroundContainer.setStyle("-fx-background-color:  white");
+        buttonspane.setMaxSize(600, 600);
+        buttonspane.setTranslateX(50);
 
-        choosePane = new GridPane();
-
-
-
-
-        container.setStyle("-fx-background-color:  white");
-        pane.setMaxSize(600, 600);
-        pane.setTranslateX(50);
-        pane.setAlignment(Pos.TOP_CENTER);
-
-        root.getChildren().add(container);
-        root.getChildren().add(choosePane);
-        root.getChildren().add(pane);
-
+        root.getChildren().add(backgroundContainer);
+        root.getChildren().add(buttonspane);
         root.getChildren().add(infoPane);
-
-
-        choosePane.setVisible(true);
-        infoPane.setVisible(false);
-        pane.setVisible(false);
+        root.setAlignment(buttonspane, Pos.CENTER);
+        root.setAlignment(infoPane, Pos.CENTER_LEFT);
 
         scene = new Scene(root, 1280, 720);
         stage.setScene(scene);
+        buttonspane.setId("viewPane");
+        scene.getStylesheets().add("style.css");
         initPaneBakgrunn();
 
-        init();
     }
 
     private JSONRepo repo;
     public void visParkeringsplass(){
 
-
-
-
-            for (int x = 0; x < buttons.size(); x++) {
-                if (radioGroup.getSelectedToggle() == buttons.get(x)) {
+            for (int x = 0; x < vp.getButtons().size(); x++) {
+                if (vp.getRadioGroup().getSelectedToggle() == vp.getButtons().get(x)) {
 
                     infoPane.getChildren().clear();
-                    pane.getChildren().clear();
-
-                    infoPane.setVisible(true);
-                    pane.setVisible(true);
-                    choosePane.setVisible(false);
+                    buttonspane.getChildren().clear();
 
 
-                    infoPane.add(parkeringsnavner.get(x), 0, 0);
-                    infoPane.add(adresser.get(x), 0, 1);
-                    infoPane.add(priser.get(x), 0, 2);
-                    infoPane.add(ledigplasser.get(x), 0, 3);
-                    parkButtons = new Button[parkeringsplasser.get(x).getPlasser()][parkeringsplasser.get(x).getPlasser()];
-                    parkButtonsBool = new Boolean[parkeringsplasser.get(x).getPlasser()][parkeringsplasser.get(x).getPlasser()];
 
-                    for (int i = 1; i <= parkeringsplasser.get(x).getPlasser() / 5; i++) {
-                        for (int j = 1; j <= parkeringsplasser.get(x).getPlasser() / 5; j++) {
+                    infoPane.add(vp.getParkeringsnavner().get(x), 0, 0);
+                    infoPane.add(vp.getAdresser().get(x), 0, 1);
+                    infoPane.add(vp.getPriser().get(x), 0, 2);
+                    infoPane.add(vp.getLedigplasser().get(x), 0, 3);
+                    parkButtons = new Button[vp.getParkeringsplasser().get(x).getPlasser()][vp.getParkeringsplasser().get(x).getPlasser()];
+                    parkButtonsBool = new Boolean[vp.getParkeringsplasser().get(x).getPlasser()][vp.getParkeringsplasser().get(x).getPlasser()];
+
+                    for (int i = 1; i <= vp.getParkeringsplasser().get(x).getPlasser() / 5; i++) {
+                        for (int j = 1; j <= vp.getParkeringsplasser().get(x).getPlasser()/ 5; j++) {
                             int finalI = i;
                             int finalJ = j;
                             parkButtons[i][j] = new Button();
@@ -154,7 +135,7 @@ public class UserView {
                             parkButtons[i][j].setText("Bestill nr" + j * i);
                             parkButtons[i][j].setPrefSize(200, 100);
                             parkButtons[i][j].setId("parkImg");
-                            pane.add(parkButtons[i][j], j, i);
+                            buttonspane.add(parkButtons[i][j], j, i);
 
                             int finalX = x;
                             parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
@@ -164,8 +145,8 @@ public class UserView {
                                //     bestillingPane.setVisible(true);
 
                                     //parkButtons[finalI][finalJ].setDisable(true);
-                                BestillingView bv = new BestillingView(parkeringsnavner.get(finalX), new Text(parkButtons[finalI][finalJ].getText()));
-                                stage.setScene(bv.getScene());
+                                BestillingView bv = new BestillingView(stage, vp, vp.getParkeringsnavner().get(finalX), new Text(parkButtons[finalI][finalJ].getText()));
+
 
                                 }
                             });
@@ -187,8 +168,11 @@ public class UserView {
                             infoPane.setVisible(false);
                             pane.setVisible(false);
                             choosePane.setVisible(true);
-                            parkButtons = new Button[0][0];
                             */
+                           // parkButtons = new Button[0][0];
+                            VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage);
+
+
 
                         }
 
@@ -204,17 +188,8 @@ public class UserView {
     }
 
 
-
-
-    public void init(){
-        pane.setAlignment(Pos.CENTER);
-        pane.setId("viewPane");
-        scene.getStylesheets().add("style.css");
-    }
-
-
     public void initPaneBakgrunn(){
-        int spawnNodes = 50;
+        int spawnNodes = 25;
         for(int i=0; i < spawnNodes; i++ ){
             spawnNode();
         }
@@ -275,11 +250,11 @@ public class UserView {
         transition.setCycleCount(Animation.INDEFINITE);
         transition.setNode(node);
         transition.play();
-        container.getChildren().add(node);
+        backgroundContainer.getChildren().add(node);
 
     }
 
 
     public Scene getScene(){return scene;}
-    public GridPane getPane (){return pane;}
+    public GridPane getPane (){return buttonspane;}
 }

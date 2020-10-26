@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.text.DateFormat;
@@ -47,10 +48,13 @@ public class BestillingView {
 
 
 
-
-    public BestillingView(Text parkeringsnavn, Text  rute){
+    private Stage stage;
+    private VelgParkeringsPlass vp;
+    public BestillingView(Stage stage, VelgParkeringsPlass vp, Text parkeringsnavn, Text  rute){
         this.parkeringsnavn = parkeringsnavn;
+        this.vp = vp;
         this.rute = rute;
+        this.stage = stage;
         root = new StackPane();
         bestillingPane= new GridPane();
         bestillingPane.setId("bestilling");
@@ -66,7 +70,7 @@ public class BestillingView {
 
         scene = new Scene(root, 1280 , 720);
         scene.getStylesheets().add("style.css");
-
+        stage.setScene(scene);
 
         init(parkeringsnavn, rute);
     }
@@ -130,6 +134,8 @@ public class BestillingView {
         Button goBack = new Button();
         goBack.setId("goback");
         goBack.setPrefSize(50, 50);
+
+        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.visParkeringsplass();});
 
         bestillingPane.add(goBack, 5, 5);
 
