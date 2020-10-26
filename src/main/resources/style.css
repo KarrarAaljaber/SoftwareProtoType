@@ -9,22 +9,23 @@
 
 }
 #pkBestilling{
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
     -fx-font-style:   italic;
     -fx-font-weight: 900;
 }
 #bestilling{
-    -fx-opacity: 0.5;
+    -fx-opacity: 0.9;
 
-    -fx-border-color: black;
+    -fx-border-color: white;
     -fx-border-width: 3px;
     -fx-background-color: linear-gradient( orange, #e29702);
 }
 #choosePane{
-    -fx-border-color: black;
+    -fx-opacity: 0.9;
 
+    -fx-border-color: white;
     -fx-border-width: 3px;
-    -fx-background-color: linear-gradient(darkgray,  lightgray);
+    -fx-background-color: linear-gradient( orange, #e29702);
 
 
 
@@ -55,6 +56,7 @@
 }
 #viewPane{
 
+    -fx-opacity: 0.9;
 
     -fx-background-color: linear-gradient( orange, #e29702);
     -fx-border-color: black;

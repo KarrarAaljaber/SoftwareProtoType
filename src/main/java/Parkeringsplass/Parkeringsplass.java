@@ -14,9 +14,11 @@ public class Parkeringsplass {
     private String adresse;
     private float pris;
     private String parkeringnavn;
+    private String imgurl;
 
-    public Parkeringsplass(String parkeringnavn, String adresse, float pris, int plasser ){
+    public Parkeringsplass(String parkeringnavn, String adresse, float pris, int plasser , String imgurl){
         this.parkeringnavn = parkeringnavn;
+        this.imgurl = imgurl;
         this.adresse = adresse;
         this.pris = pris;
         this.plasser = plasser;
@@ -59,11 +61,15 @@ public class Parkeringsplass {
         this.parkeringnavn = parkeringnavn;
     }
 
+    public String getImgurl() {
+        return imgurl;
+    }
+
     @JsonIgnore
     @Override
     public String toString(){
         return new String("Parkering's navn: " + getParkeringnavn()+ "\n" +
                 "adresse: " + getAdresse() + "\n" + "pris: " + getPris() + "\n" +
-                "Antall parkering's spotter: " + plasser);
+                "Antall parkering's spotter: " + plasser + "\n" + "imgurl: " + imgurl  );
     }
 }

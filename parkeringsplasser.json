@@ -2,10 +2,14 @@
   "plasser" : 25,
   "adresse" : "Walkers gate 4, 1771 Halden",
   "pris" : 24.0,
-  "parkeringnavn" : "Halden Tista Sentrum"
-}, {
+  "parkeringnavn" : "Halden Tista Sentrum",
+  "imgurl" : "https://tistasenter.no/tista%20senter/galleri_om%20oss//tista-drone.jpg"
+},
+
+  {
   "plasser" : 50,
   "adresse" : "B R A Veien 4, 1757 Halden",
   "pris" : 30.0,
-  "parkeringnavn" : "Hogskolen i Ostfold"
+  "parkeringnavn" : "Hogskolen i Ostfold",
+  "imgurl" : "https://static.cupmanager.net/uploads/D/J/081/2018-09-12_11h02_35,530x270.png"
 }]

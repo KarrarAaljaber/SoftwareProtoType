@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -17,12 +18,16 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -33,24 +38,14 @@ public class VelgParkeringsPlass {
 
 
     private Scene scene;
-
     private Pane container;
-
-
-
-
-
     private StackPane root;
-
     private GridPane choosePane;
-
-
     private Button confirmSelect;
 
 
 
 
-    private int wrapW = 180;
 
 
     private final double intialBlur = 4;
@@ -98,15 +93,15 @@ public class VelgParkeringsPlass {
         choosePane.setId("choosePane");
         choosePane.setAlignment(Pos.CENTER);
         choosePane.setHgap(10);
-        choosePane.setMaxSize(600, 100);
+        choosePane.setMaxSize(800, 400);
         choosePane.toFront();
 
 
-        container.setStyle("-fx-background-color:  white");
 
 
         root.getChildren().add(container);
         root.getChildren().add(choosePane);
+        container.setStyle("-fx-background-color: rgba(22,22,22,1);");
 
 
 
@@ -136,22 +131,22 @@ public class VelgParkeringsPlass {
         for (int i = 0; i < parkeringsplasser.size(); i++) {
             Text ParkeringsNavni = new Text("ParkeringsNavn: " + parkeringsplasser.get(i).getParkeringnavn());
             ParkeringsNavni.setId("text");
-            ParkeringsNavni.setWrappingWidth(wrapW);
+            ParkeringsNavni.setWrappingWidth(0);
             parkeringsnavner.add(ParkeringsNavni);
 
             Text adressei = new Text("Adresse: " + parkeringsplasser.get(i).getAdresse());
             adressei.setId("text");
-            adressei.setWrappingWidth(wrapW);
+            adressei.setWrappingWidth(0);
             adresser.add(adressei);
 
             Text prisi = new Text("Pris Per Time: " + parkeringsplasser.get(i).getPris());
             prisi.setId("text");
-            prisi.setWrappingWidth(wrapW);
+            prisi.setWrappingWidth(0);
             priser.add(prisi);
 
             Text LedigePlasseri = new Text("Antall Ledige Plasser: " + parkeringsplasser.get(i).getPlasser());
             LedigePlasseri.setId("text");
-            LedigePlasseri.setWrappingWidth(wrapW);
+            LedigePlasseri.setWrappingWidth(0);
             ledigplasser.add(LedigePlasseri);
 
         }
@@ -182,25 +177,31 @@ public class VelgParkeringsPlass {
         radioGroup = new ToggleGroup();
         HBox radioBox = new HBox();
         Text text = new Text("ParkeringSteder I Naerheten");
-        text.setStyle("-fx-font-size: 30px; -fx-background-color: gray; -fx-border-color: black; -fx-border-width: 2px");
-        text.setX(400);
-        text.setY(200);
+        text.setStyle("-fx-font-size: 25px;");
+
+        text.setFill(Color.WHITE);
         text.toFront();
-        container.getChildren().add(text);
+        choosePane.add(text,0, 0);
+     //   choosePane.setGridLinesVisible(true);
+
+
+
+
 
         //lager en radiobutton for hvert parkeringsplass
         for(int i=0; i < parkeringsplasser.size(); i++){
-
+            ImageView Imagei = new ImageView(new Image(parkeringsplasser.get(i).getImgurl()));
+            Imagei.setFitWidth(200);
+            Imagei.setFitHeight(200);
+            Imagei.setId("parkChooseImg");
+            choosePane.add(Imagei, i , 1);
             RadioButton radioButtoni = new RadioButton(parkeringsplasser.get(i).getParkeringnavn());
             buttons.add(radioButtoni);
             radioButtoni.setToggleGroup(radioGroup);
             radioBox.getChildren().add(radioButtoni);
             velgParkRadio.add(radioButtoni);
-            choosePane.add(radioButtoni, i , 0);
-        /*    ImageView TistaImg = new ImageView(new Image("https://tellusdmsmedia.newmindmedia.com/wsimgs/18983398_10156189404679307_1537015086_n_781050600.jpg"));
-            TistaImg.setFitWidth(200);
-            TistaImg.setFitHeight(200);
-            TistaImg.setId("parkChooseImg");*/
+            choosePane.add(radioButtoni, i , 2);
+
 
         }
 

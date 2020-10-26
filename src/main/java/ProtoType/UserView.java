@@ -82,9 +82,8 @@ public class UserView {
         infoPane = new GridPane();
         infoPane.setId("infoPane");
         infoPane.setMaxHeight(200);
-        infoPane.setMaxWidth(400);
-        infoPane.setMinWidth(200);
-        infoPane.setAlignment(Pos.CENTER_LEFT);
+        infoPane.setMaxWidth(350);
+
         infoPane.setVgap(5);
         infoPane.setHgap(5);
 
@@ -99,6 +98,7 @@ public class UserView {
         root.getChildren().add(infoPane);
         root.setAlignment(buttonspane, Pos.CENTER);
         root.setAlignment(infoPane, Pos.CENTER_LEFT);
+        backgroundContainer.setStyle("-fx-background-color: rgba(22,22,22,1);");
 
         scene = new Scene(root, 1280, 720);
         stage.setScene(scene);
