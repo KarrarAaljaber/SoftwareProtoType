@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -54,8 +55,8 @@ public class BestillingView {
         bestillingPane= new GridPane();
         bestillingPane.setId("bestilling");
 
-        bestillingPane.setMaxHeight(500);
-        bestillingPane.setMaxWidth(500);
+        bestillingPane.setMaxHeight(600);
+        bestillingPane.setMaxWidth(600);
 
 
 
@@ -118,8 +119,19 @@ public class BestillingView {
         bestillingPane.add(bilskiltnr, 1, 4);
 
 
-        bestillingPane.setGridLinesVisible(true);
-        bestillingPane.setAlignment(Pos.CENTER);
+      //  bestillingPane.setGridLinesVisible(true);
+     //   bestillingPane.setAlignment(Pos.CENTER);
+        bestillingPane.setMinWidth(500);
+        bestillingPane.setMinHeight(500);
+        bestillingPane.setHgap(20);
+        bestillingPane.setVgap(20);
+
+
+        Button goBack = new Button();
+        goBack.setId("goback");
+        goBack.setPrefSize(50, 50);
+
+        bestillingPane.add(goBack, 5, 5);
 
 
     }

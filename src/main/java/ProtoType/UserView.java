@@ -25,6 +25,7 @@ import javafx.util.Duration;
 import java.awt.*;
 import java.util.ArrayList;
 
+
 public class UserView {
 
     private Scene scene;
@@ -32,13 +33,7 @@ public class UserView {
 
     private Stage stage;
 
-    private Parkeringsplass Haldensentrum;
-    private Parkeringsplass hiof;
     private Pane container;
-
-
-
-
 
     private StackPane root;
 
@@ -46,7 +41,6 @@ public class UserView {
     private GridPane choosePane;
 
 
-    private  Button confirmSelect;
 
     Color[] colors = {
             new Color(0.0, 0.9, 0.0, 1.0).saturate().brighter(),
@@ -56,14 +50,8 @@ public class UserView {
             new Color(0.9, 0.5, 0.0, 1.0).saturate().brighter()
     };
 
-    enum ValgtParkeringPlass {
-        tista,
-        hiof,
 
-    }
-    private ValgtParkeringPlass valgt;
 
-     private GridPane bestillingPane;
     private  Button[][] parkButtons;
     private Boolean [][] parkButtonsBool;
     private int wrapW = 180;
@@ -80,24 +68,17 @@ public class UserView {
     LinearGradient linearGradient =
             new LinearGradient(0, 0, 1, 0, true, CycleMethod.REPEAT, stops);
 
-    //velg parkeringsplass
 
-    private ArrayList<Parkeringsplass> parkeringsplasser;
 
-    private ArrayList<RadioButton> buttons = new ArrayList<>();
-    private ToggleGroup radioGroup;
-    private RadioButton Tista, hiofR;
-    private ArrayList<RadioButton> velgParkRadio = new ArrayList<>();
-
-    public UserView(Stage stage){
+    private VelgParkeringsPlass vp;
+    public UserView(Stage stage, VelgParkeringsPlass vp){
+        this.vp = vp;
         this.stage = stage;
 
         root = new StackPane();
         pane = new GridPane();
         container = new Pane();
         infoPane = new GridPane();
-        choosePane = new GridPane();
-        bestillingPane= new GridPane();
 
         infoPane = new GridPane();
         infoPane.setId("infoPane");
@@ -110,25 +91,11 @@ public class UserView {
         infoPane.setHgap(5);
 
 
-        bestillingPane.setAlignment(Pos.TOP_CENTER);
-        bestillingPane.setId("infoPane");
-
-        bestillingPane.setMaxHeight(200);
-        bestillingPane.setMaxWidth(300);
-        bestillingPane.setTranslateX(500);
-        bestillingPane.setVgap(5);
-        bestillingPane.setHgap(5);
-
-
 
 
         choosePane = new GridPane();
 
-        choosePane.setId("choosePane");
-        choosePane.setAlignment(Pos.CENTER);
-        choosePane.setHgap(10);
-        choosePane.setMaxSize(600, 100);
-        choosePane.toFront();
+
 
 
         container.setStyle("-fx-background-color:  white");
@@ -141,91 +108,35 @@ public class UserView {
         root.getChildren().add(pane);
 
         root.getChildren().add(infoPane);
-        root.getChildren().add(bestillingPane);
 
 
         choosePane.setVisible(true);
         infoPane.setVisible(false);
-        bestillingPane.setVisible(false);
         pane.setVisible(false);
 
         scene = new Scene(root, 1280, 720);
         stage.setScene(scene);
-
-        initParkingplasser();
         initPaneBakgrunn();
 
         init();
     }
 
     private JSONRepo repo;
-    public void initParkingplasser(){
-        parkeringsplasser = new ArrayList<>();
-
-        repo = new JSONRepo();
-        //  repo.WriteToJSON("parkeringsplasser.json", parkeringsplasser);
-        velgPark();
-
-        ArrayList<Text> parkeringsnavner = new ArrayList<>();
-        ArrayList<Text> adresser = new ArrayList<>();
-        ArrayList<Text> priser = new ArrayList<>();
-        ArrayList<Text> ledigplasser = new ArrayList<>();
+    public void visParkeringsplass(){
 
 
 
-        //laster opp de forskjellige parkeringsplassene
-        for(int i=0; i < parkeringsplasser.size(); i++){
-            Text ParkeringsNavni = new Text("ParkeringsNavn: " + parkeringsplasser.get(i).getParkeringnavn());
-            ParkeringsNavni.setId("text");
-            ParkeringsNavni.setWrappingWidth(wrapW);
-            parkeringsnavner.add(ParkeringsNavni);
-
-            Text adressei = new Text("Adresse: " + parkeringsplasser.get(i).getAdresse());
-            adressei.setId("text");
-            adressei.setWrappingWidth(wrapW);
-            adresser.add(adressei);
-
-            Text prisi = new Text("Pris Per Time: " + parkeringsplasser.get(i).getPris());
-            prisi.setId("text");
-            prisi.setWrappingWidth(wrapW);
-            priser.add(prisi);
-
-            Text LedigePlasseri = new Text("Antall Ledige Plasser: " + parkeringsplasser.get(i).getPlasser());
-            LedigePlasseri.setId("text");
-            LedigePlasseri.setWrappingWidth(wrapW);
-            ledigplasser.add(LedigePlasseri);
-
-        }
-
-
-
-
-
-        pane.setVgap(5);
-        pane.setHgap(5);
-        blur.setInput(new ColorAdjust(0,0,0.4,0));
-
-
-
-        for(int i=0; i < parkeringsplasser.size(); i++){
-            System.out.println(parkeringsplasser.get(i).toString());
-        }
-
-
-
-
-        confirmSelect.setOnAction(action -> {
 
             for (int x = 0; x < buttons.size(); x++) {
                 if (radioGroup.getSelectedToggle() == buttons.get(x)) {
-                    valgt = ValgtParkeringPlass.tista;
+
                     infoPane.getChildren().clear();
                     pane.getChildren().clear();
 
                     infoPane.setVisible(true);
                     pane.setVisible(true);
                     choosePane.setVisible(false);
-                    bestillingPane.setVisible(false);
+
 
                     infoPane.add(parkeringsnavner.get(x), 0, 0);
                     infoPane.add(adresser.get(x), 0, 1);
@@ -272,11 +183,13 @@ public class UserView {
                     goBack.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
+                            /*
                             infoPane.setVisible(false);
-                            bestillingPane.setVisible(false);
                             pane.setVisible(false);
                             choosePane.setVisible(true);
                             parkButtons = new Button[0][0];
+                            */
+
                         }
 
 
@@ -286,45 +199,12 @@ public class UserView {
             }
 
 
-            });
+
 
     }
 
 
 
-    public void velgPark(){
-        //laster opp parkeringsplassene fra en json fil
-        parkeringsplasser = repo.LoadFile("parkeringsplasser.json");
-        radioGroup = new ToggleGroup();
-        HBox radioBox = new HBox();
-        Text text = new Text("ParkeringSteder I Naerheten");
-        text.setStyle("-fx-font-size: 30px; -fx-background-color: gray; -fx-border-color: black; -fx-border-width: 2px");
-        text.setX(400);
-        text.setY(200);
-        text.toFront();
-        container.getChildren().add(text);
-
-        //lager en radiobutton for hvert parkeringsplass
-        for(int i=0; i < parkeringsplasser.size(); i++){
-
-            RadioButton radioButtoni = new RadioButton(parkeringsplasser.get(i).getParkeringnavn());
-            buttons.add(radioButtoni);
-            radioButtoni.setToggleGroup(radioGroup);
-            radioBox.getChildren().add(radioButtoni);
-            velgParkRadio.add(radioButtoni);
-            choosePane.add(radioButtoni, i , 0);
-        /*    ImageView TistaImg = new ImageView(new Image("https://tellusdmsmedia.newmindmedia.com/wsimgs/18983398_10156189404679307_1537015086_n_781050600.jpg"));
-            TistaImg.setFitWidth(200);
-            TistaImg.setFitHeight(200);
-            TistaImg.setId("parkChooseImg");*/
-
-        }
-
-        confirmSelect = new Button("Confirm");
-        choosePane.add(confirmSelect, 0,3);
-        choosePane.setPadding(new Insets(20,20,20,20));
-
-    }
 
     public void init(){
         pane.setAlignment(Pos.CENTER);
