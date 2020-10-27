@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.BoxBlur;
@@ -19,10 +20,7 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -82,31 +80,17 @@ public class VelgParkeringsPlass {
         this.stage = stage;
         root = new StackPane();
         container = new Pane();
-
         choosePane = new GridPane();
-
-
-
-
-        choosePane = new GridPane();
-
         choosePane.setId("choosePane");
         choosePane.setAlignment(Pos.CENTER);
         choosePane.setHgap(10);
         choosePane.setMaxSize(800, 400);
         choosePane.toFront();
-
-
-
-
         root.getChildren().add(container);
         root.getChildren().add(choosePane);
         container.setStyle("-fx-background-color: rgba(22,22,22,1);");
 
-
-
         scene = new Scene(root, 1280, 720);
-
         scene.getStylesheets().add("style.css");
         stage.setScene(scene);
 
@@ -161,6 +145,8 @@ public class VelgParkeringsPlass {
 
 
         confirmSelect.setOnAction(action -> {
+
+
             UserView view = new UserView(stage, this);
             view.visParkeringsplass();
         });

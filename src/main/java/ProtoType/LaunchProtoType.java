@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -101,6 +102,8 @@ public class LaunchProtoType extends Application {
             if(  name.getText().equals(KontoList.get(i).getNavn()) &&  pass.getText().equals(KontoList.get(i).getPassord())){
                 System.out.println("CORrect");
                 text.setVisible(false);
+
+
 
                 VelgParkeringsPlass vp = new VelgParkeringsPlass(stage);
                 stage.setScene(vp.getScene());
