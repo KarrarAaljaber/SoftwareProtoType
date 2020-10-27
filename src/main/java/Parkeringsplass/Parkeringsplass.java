@@ -23,7 +23,9 @@ public class Parkeringsplass {
         this.pris = pris;
         this.plasser = plasser;
     }
-
+    public Parkeringsplass(String parkeringnavn){
+        this.parkeringnavn = parkeringnavn;
+    }
     public Parkeringsplass(){
 
     }
