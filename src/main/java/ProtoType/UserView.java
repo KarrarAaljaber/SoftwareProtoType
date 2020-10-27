@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -125,17 +126,20 @@ public class UserView {
                     infoPane.add(vp.getLedigplasser().get(x), 0, 3);
                     parkButtons = new Button[vp.getParkeringsplasser().get(x).getPlasser()][vp.getParkeringsplasser().get(x).getPlasser()];
                     parkButtonsBool = new Boolean[vp.getParkeringsplasser().get(x).getPlasser()][vp.getParkeringsplasser().get(x).getPlasser()];
-
-                    for (int i = 1; i <= vp.getParkeringsplasser().get(x).getPlasser() / 5; i++) {
-                        for (int j = 1; j <= vp.getParkeringsplasser().get(x).getPlasser()/ 5; j++) {
+                    int count = 0;
+                    for (int i = 1; i <= vp.getParkeringsplasser().get(x).getPlasser() / Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser()); i++) {
+                        for (int j = 1; j <= vp.getParkeringsplasser().get(x).getPlasser()/ Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser()); j++) {
                             int finalI = i;
                             int finalJ = j;
+                            count++;
                             parkButtons[i][j] = new Button();
                             parkButtonsBool[i][j] = false;
-                            parkButtons[i][j].setText("Bestill nr" + j * i);
+                            parkButtons[i][j].setText( String.valueOf(count ));
+                            parkButtons[i][j].setTextFill(Color.WHITE);
+                            parkButtons[i][j].setFont(new Font("Arial", 16));
                             parkButtons[i][j].setPrefSize(200, 100);
                             parkButtons[i][j].setId("parkImg");
-                            buttonspane.add(parkButtons[i][j], j, i);
+                            buttonspane.add(parkButtons[i][j], j , i);
 
                             int finalX = x;
                             parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
@@ -145,7 +149,7 @@ public class UserView {
                                //     bestillingPane.setVisible(true);
 
                                     //parkButtons[finalI][finalJ].setDisable(true);
-                                BestillingView bv = new BestillingView(stage, vp, vp.getParkeringsnavner().get(finalX), new Text(parkButtons[finalI][finalJ].getText()));
+                                BestillingView bv = new BestillingView(stage, vp, vp.getParkeringsnavner().get(finalX), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())));
 
 
                                 }

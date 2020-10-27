@@ -81,14 +81,18 @@
 
 #parkImg{
 
-    -fx-opacity: 0.7;
+/* the gradient on top, adjust color and opacity to your taste */
+
 
     -fx-background-image: url("https://pngimg.com/uploads/parking/parking_PNG6.png");
+    -fx-background-color:rgba(0, 255, 0, 0.3);
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 
-
+    -fx-font-size: 14px;
+    -fx-font-weight: 900;
+    -fx-border-color: white;
     -fx-border-width: 2;
 
 
