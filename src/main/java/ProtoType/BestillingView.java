@@ -3,7 +3,6 @@ package ProtoType;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -18,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BestillingView {
     private Scene scene;
@@ -50,8 +50,11 @@ public class BestillingView {
 
     private Stage stage;
     private VelgParkeringsPlass vp;
-    public BestillingView(Stage stage, VelgParkeringsPlass vp, Text parkeringsnavn, Text  rute){
+    private Text prisPerTime;
+
+    public BestillingView(Stage stage, VelgParkeringsPlass vp, Text parkeringsnavn, Text  rute, Text prisPerTime){
         this.parkeringsnavn = parkeringsnavn;
+        this.prisPerTime = prisPerTime;
         this.vp = vp;
         this.rute = rute;
         this.stage = stage;
@@ -157,6 +160,7 @@ public class BestillingView {
         tidbox.getChildren().add(spinner);
         tidbox.getChildren().add(minuteL);
         tidbox.getChildren().add(spinner2);
+        tidbox.setSpacing(15);
 
 
         Label hourL2 = new Label("Time: ");
@@ -178,6 +182,7 @@ public class BestillingView {
         tidbox2.getChildren().add(spinner3);
         tidbox2.getChildren().add(minuteL2);
         tidbox2.getChildren().add(spinner4);
+        tidbox2.setSpacing(15);
 
 
 
@@ -186,8 +191,26 @@ public class BestillingView {
 
         bestillingPane.setVgap(10);
 
+        //pris
+        Label prisprTimeL = new Label("Pris Per Time: ");
+        bestillingPane.add(prisprTimeL, 0, 7);
+        bestillingPane.add(prisPerTime, 1, 7);
+
+        Label totalPrisL = new Label("Total Pris: ");
+        Text totalPris = new Text();
+
+        spinner.valueProperty().addListener((obs, oldValue, newValue) ->
+                totalPris.setText(String.valueOf((spinner3.getValue() - newValue  ) * Float.valueOf(prisPerTime.getText()))));
+        spinner3.valueProperty().addListener((obs, oldValue, newValue) ->
+                totalPris.setText(String.valueOf((newValue - spinner.getValue() ) *Float.valueOf(prisPerTime.getText() ))));
+
+        bestillingPane.add(totalPrisL, 0, 8);
+        bestillingPane.add(totalPris, 1, 8);
         Button confirm = new Button("bekreft betalling");
-        bestillingPane.add(confirm, 0, 7, 2,1);
+        bestillingPane.add(confirm, 0, 9, 2,1);
+
+
+
 
         Button goBack = new Button();
         goBack.setId("goback");
@@ -195,7 +218,7 @@ public class BestillingView {
 
         goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.visParkeringsplass();});
 
-        bestillingPane.add(goBack, 2, 8, 2,1);
+        bestillingPane.add(goBack, 2, 10, 2,1);
 
 
     }
