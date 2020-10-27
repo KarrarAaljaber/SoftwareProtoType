@@ -6,27 +6,27 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-public class CheckOmraader {
+public class checkOmraadeAdresse {
     JSONRepo repo = new JSONRepo();
     ArrayList<Parkeringsplass> parkeringsplasser = new ArrayList<>();
-    Parkeringsplass plass = new Parkeringsplass("Halden Tista Sentrum");
+    Parkeringsplass plass = new Parkeringsplass("","Walkers gate 4, 1771 Halden",0,0,"");
 
     @Test
-    public void omraade(){
+    public void omraadeAdresse(){
         parkeringsplasser = repo.LoadFile("parkeringsplasser.json");
         boolean t = false;
         for (Parkeringsplass parkeringsplass : parkeringsplasser) {
-            if (plass.getParkeringnavn().equals(parkeringsplass.getParkeringnavn())) {
+            if (plass.getAdresse().equals(parkeringsplass.getAdresse())) {
                 t = true;
-                Assert.assertTrue("Parkeringsplass Exist", t);
-                System.out.println("Parkeringsplass Exist");
+                Assert.assertTrue(t);
+                System.out.println("Adresse Exist");
                 break;
             }
         }
-    if(!t){
-        Assert.assertFalse(false);
-        System.out.println("Parkeringsplass does not exist");
-    }
+        if(!t){
+            Assert.assertFalse(t);
+            System.out.println("Adresse does not exist");
+        }
 
     }
 
