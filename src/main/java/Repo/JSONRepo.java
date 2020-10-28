@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import Parkeringsplass.Bestilling;
 
 public class JSONRepo implements CRUD {
 
@@ -22,9 +23,25 @@ public class JSONRepo implements CRUD {
     private ObjectMapper obj =new ObjectMapper();
     private ArrayList<Parkeringsplass> parkeringsplasser = new ArrayList<>();
     private ArrayList<Konto> kontoer = new ArrayList<>();
+    private ArrayList<Bestilling> bestillinger = new ArrayList<>();
 
 
-    public ArrayList<Konto> LoadFile2(String s){
+    public ArrayList<Konto> LoadFileBestillinger(String s){
+        try{
+            Bestilling[] bes = obj.readValue(new File(s), Bestilling[].class);
+
+            bestillinger.addAll(Arrays.asList(bes));
+
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return kontoer;
+    }
+    public ArrayList<Konto> LoadFileKonto(String s){
         try{
             Konto[] kontos = obj.readValue(new File(s), Konto[].class);
 
@@ -39,7 +56,7 @@ public class JSONRepo implements CRUD {
         }
         return kontoer;
     }
-    public void WriteToJSON2(String fileName, ArrayList<Konto> konto){
+    public void WriteToJSONKonto(String fileName, ArrayList<Konto> konto){
         try{
             File file = new File(fileName);
             obj.registerModule(new JavaTimeModule());
@@ -55,6 +72,21 @@ public class JSONRepo implements CRUD {
         }
     }
 
+    public void WriteToJSONBestilling(String fileName, ArrayList<Bestilling> bestillinger){
+        try{
+            File file = new File(fileName);
+            obj.registerModule(new JavaTimeModule());
+            obj.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            obj.writerWithDefaultPrettyPrinter().writeValue(file, bestillinger);
+
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public ArrayList<Parkeringsplass> LoadFile(String s){
         try{

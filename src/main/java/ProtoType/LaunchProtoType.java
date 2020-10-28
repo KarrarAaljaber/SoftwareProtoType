@@ -22,13 +22,12 @@ import java.util.ArrayList;
 
 public class LaunchProtoType extends Application {
 
-    Konto Test = new Konto("Name", "passord");
     JSONRepo rep = new JSONRepo();
     ArrayList<Konto> KontoList = new ArrayList<>();
+    public static Konto loggedon;
     public LaunchProtoType(){
-        KontoList.add(Test);
-        KontoList = rep.LoadFile2("Konto.json");
-        //rep.WriteToJSON2("Konto.json",KontoList);
+        KontoList = rep.LoadFileKonto("Konto.json");
+        //rep.WriteToJSONKonto("Konto.json",KontoList);
     }
 
     @Override
@@ -102,7 +101,7 @@ public class LaunchProtoType extends Application {
             if(  name.getText().equals(KontoList.get(i).getNavn()) &&  pass.getText().equals(KontoList.get(i).getPassord())){
                 System.out.println("CORrect");
                 text.setVisible(false);
-
+                loggedon = new Konto(KontoList.get(i).getNavn(), KontoList.get(i).getPassord());
 
 
                 VelgParkeringsPlass vp = new VelgParkeringsPlass(stage);
