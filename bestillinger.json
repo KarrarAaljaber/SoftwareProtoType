@@ -24,4 +24,134 @@
   "fraMinut" : 2,
   "tilTime" : 24,
   "tilMinut" : 2
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 2,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "dadadda",
+  "tlfnr" : "2323",
+  "fraTime" : 22,
+  "fraMinut" : 6,
+  "tilTime" : 24,
+  "tilMinut" : 6
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 3,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 9,
+  "tilTime" : 22,
+  "tilMinut" : 9
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 24,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 9,
+  "tilTime" : 22,
+  "tilMinut" : 9
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 22,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 9,
+  "tilTime" : 22,
+  "tilMinut" : 9
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 9,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 10,
+  "tilTime" : 22,
+  "tilMinut" : 10
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 17,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 11,
+  "tilTime" : 22,
+  "tilMinut" : 11
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 19,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 11,
+  "tilTime" : 22,
+  "tilMinut" : 11
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 8,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 12,
+  "tilTime" : 22,
+  "tilMinut" : 12
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 8,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 12,
+  "tilTime" : 22,
+  "tilMinut" : 12
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 10,
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 22,
+  "fraMinut" : 13,
+  "tilTime" : 22,
+  "tilMinut" : 13
 } ]

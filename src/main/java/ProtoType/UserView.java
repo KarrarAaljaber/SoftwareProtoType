@@ -170,7 +170,6 @@ public class UserView {
 
                                bestillinger.add(new Bestilling(LaunchProtoType.loggedon,   Integer.valueOf( parkButtons[finalI][finalJ].getText()),vp.getParkeringsnavner().get(finalX).getText(), bv.getNavn().getText(), bv.getTlf().getText(), bv.getSpinner().getValue(),  bv.getSpinner2().getValue(),
                                         bv.getSpinner3().getValue(), bv.getSpinner4().getValue()));
-                                parkButtons[finalI][finalJ].setId("parkimg2");
                                 parkButtons[finalI][finalJ].setDisable(true);
                                 repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
                                 stage.setScene(scene);
