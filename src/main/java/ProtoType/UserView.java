@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
+import Parkeringsplass.Bestilling;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -110,86 +111,120 @@ public class UserView {
     }
 
     private JSONRepo repo;
-    public void visParkeringsplass(){
+    private Button valgtbtn;
+    public void initParkeringsplasser() {
+        repo = new JSONRepo();
+        for (int x = 0; x < vp.getButtons().size(); x++) {
+            if (vp.getRadioGroup().getSelectedToggle() == vp.getButtons().get(x)) {
 
-            for (int x = 0; x < vp.getButtons().size(); x++) {
-                if (vp.getRadioGroup().getSelectedToggle() == vp.getButtons().get(x)) {
-
-                    infoPane.getChildren().clear();
-                    buttonspane.getChildren().clear();
-
-
-
-                    infoPane.add(vp.getParkeringsnavner().get(x), 0, 0);
-                    infoPane.add(vp.getAdresser().get(x), 0, 1);
-                    infoPane.add(vp.getPriser().get(x), 0, 2);
-                    infoPane.add(vp.getLedigplasser().get(x), 0, 3);
-                    parkButtons = new Button[vp.getParkeringsplasser().get(x).getPlasser()][vp.getParkeringsplasser().get(x).getPlasser()];
-                    parkButtonsBool = new Boolean[vp.getParkeringsplasser().get(x).getPlasser()][vp.getParkeringsplasser().get(x).getPlasser()];
-                    int count = 0;
-                    for (int i = 1; i <= vp.getParkeringsplasser().get(x).getPlasser() / Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser()); i++) {
-                        for (int j = 1; j <= vp.getParkeringsplasser().get(x).getPlasser()/ Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser()); j++) {
-                            int finalI = i;
-                            int finalJ = j;
-                            count++;
-                            parkButtons[i][j] = new Button();
-                            parkButtonsBool[i][j] = false;
-                            parkButtons[i][j].setText( String.valueOf(count ));
-                            parkButtons[i][j].setTextFill(Color.WHITE);
-                            parkButtons[i][j].setFont(new Font("Arial", 16));
-                            parkButtons[i][j].setPrefSize(200, 100);
-                            parkButtons[i][j].setId("parkImg");
-                            buttonspane.add(parkButtons[i][j], j , i);
-
-                            int finalX = x;
-                            parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                    //parkButtonsBool[finalI][finalJ] = false;
-                               //     bestillingPane.setVisible(true);
-
-                                    //parkButtons[finalI][finalJ].setDisable(true);
-                                BestillingView bv = new BestillingView(stage, vp, vp.getParkeringsnavner().get(finalX), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())));
+                infoPane.getChildren().clear();
+                buttonspane.getChildren().clear();
 
 
-                                }
+                infoPane.add(vp.getParkeringsnavner().get(x), 0, 0);
+                infoPane.add(vp.getAdresser().get(x), 0, 1);
+                infoPane.add(vp.getPriser().get(x), 0, 2);
+                infoPane.add(vp.getLedigplasser().get(x), 0, 3);
+                parkButtons = new Button[vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())][vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())];
+                parkButtonsBool = new Boolean[vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())][vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())];
+                for (int i = 0; i < parkButtons.length; i++) {
+                    for (int j = 0; j < parkButtons.length; j++) {
+                        parkButtons[i][j] = new Button();
+                        parkButtonsBool[i][j] = false;
+                        count++;
+                        parkButtons[i][j].setText(String.valueOf(count));
+                        parkButtons[i][j].setTextFill(Color.WHITE);
+                        parkButtons[i][j].setFont(new Font("Arial", 16));
+                        parkButtons[i][j].setPrefSize(200, 100);
+                        parkButtons[i][j].setId("parkImg");
+
+                        int finalI = i;
+                        int finalJ = j;
+                        int finalX = x;
+                        int finalX1 = x;
+                        parkButtons[i][j].setOnAction(action -> {
+
+                            BestillingView bv = new BestillingView(stage, vp, vp.getParkeringsnavner().get(finalX), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())) );
+                            bv.getConfirm().setOnAction(action2 ->{
+                                parkButtonsBool[finalI][finalJ] = true;
+
+                                bv.getBestillinger().add(new Bestilling(LaunchProtoType.loggedon, 22,"dd", "ddd", "dd", 22, 22,22,22));
+                                parkButtons[finalI][finalJ].setId("parkimg2");
+                                parkButtons[finalI][finalJ].setDisable(true);
+                                repo.WriteToJSONBestilling("bestillinger.json", bv.getBestillinger());
+                                stage.setScene(scene);
                             });
+                        });
 
-                        }
+                        buttonspane.add(parkButtons[i][j], j, i);
+
+
                     }
 
-                    Button goBack = new Button();
-                    goBack.setId("goback");
-                    goBack.setPrefSize(50, 50);
 
-                    infoPane.add(goBack, 1, 2);
+                }
+            }
+        }
+        Button goBack = new Button();
+        goBack.setId("goback");
+        goBack.setPrefSize(50, 50);
+
+        infoPane.add(goBack, 1, 2);
 
 
-                    goBack.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
+        goBack.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
                             /*
                             infoPane.setVisible(false);
                             pane.setVisible(false);
                             choosePane.setVisible(true);
                             */
-                           // parkButtons = new Button[0][0];
-                            VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage);
+                VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage);
+                editParkeringsplass2();
+
+            }
 
 
+        });
+    }
+    int count = 0;
+
+    public void editParkeringsplass(Button btn){
+                for (int i = 0; i < parkButtons.length; i++) {
+                    for (int j = 0; j < parkButtons.length; j++) {
+                        count++;
+                        parkButtons[i][j].setText(String.valueOf(count));
+                        parkButtons[i][j].setTextFill(Color.WHITE);
+                        parkButtons[i][j].setFont(new Font("Arial", 16));
+                        parkButtons[i][j].setPrefSize(200, 100);
+                        if (parkButtons[i][j] == btn) {
+                            parkButtons[i][j].setId("parkimg2");
+
+                        } else {
+                            parkButtons[i][j].setId("parkImg");
 
                         }
 
-
-                    });
-
+                    }
                 }
+
+
+
             }
 
 
 
+    public void editParkeringsplass2(){
 
-    }
+        }
+
+
+
+
+
+
+
 
 
     public void initPaneBakgrunn(){

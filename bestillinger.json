@@ -1,0 +1,14 @@
+[ {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 22,
+  "parkeringsplassnavn" : "dd",
+  "fullnavn" : "ddd",
+  "tlfnr" : "dd",
+  "fraTime" : 22,
+  "fraMinut" : 22,
+  "tilTime" : 22,
+  "tilMinut" : 22
+} ]

@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -60,7 +61,9 @@ public class BestillingView {
 
 
     private ArrayList<Bestilling> bestillinger = new ArrayList<>();
+    private Button btn;
     private JSONRepo repo;
+    private Button confirm;
     public BestillingView(Stage stage, VelgParkeringsPlass vp, Text parkeringsnavn, Text  rute, Text prisPerTime){
         this.parkeringsnavn = parkeringsnavn;
         this.prisPerTime = prisPerTime;
@@ -75,8 +78,6 @@ public class BestillingView {
         bestillingPane.setMaxWidth(600);
 
         repo = new JSONRepo();
-
-
         root.getChildren().add(bestillingPane);
         root.setStyle("-fx-background-color: rgba(22,22,22,1);");
 
@@ -142,7 +143,6 @@ public class BestillingView {
         bestillingPane.add(bilskiltnr, 1, 5);
 
 
-        bestillingPane.setGridLinesVisible(true);
         bestillingPane.setAlignment(Pos.CENTER);
         bestillingPane.setMinWidth(500);
         bestillingPane.setMinHeight(500);
@@ -222,7 +222,7 @@ public class BestillingView {
 
         bestillingPane.add(totalPrisL, 0, 9);
         bestillingPane.add(totalPris, 1, 9);
-        Button confirm = new Button("bekreft betalling");
+         confirm = new Button("bekreft betalling");
         bestillingPane.add(confirm, 0, 10, 2,1);
 
 
@@ -232,20 +232,21 @@ public class BestillingView {
         goBack.setId("goback");
         goBack.setPrefSize(50, 50);
 
-        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.visParkeringsplass();});
+        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.initParkeringsplasser(); userView.editParkeringsplass(btn);});
 
         bestillingPane.add(goBack, 2, 11, 2,1);
 
 
         confirm.setOnAction(action->{
-            bestillinger.add(new Bestilling(LaunchProtoType.loggedon, Integer.valueOf(rute.getText()), parkeringsnavn.getText(), navn.getText(), tlf.getText(), Integer.valueOf(spinner.getValue()),
-                    Integer.valueOf(spinner2.getValue())
-            , Integer.valueOf(spinner3.getValue()), Integer.valueOf(spinner4.getValue())));
 
-            repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
+
         });
 
 
+    }
+
+    public ArrayList<Bestilling> getBestillinger() {
+        return bestillinger;
     }
 
     public Scene getScene(){
@@ -254,7 +255,7 @@ public class BestillingView {
 
 
 
-
-
-
+    public Button getConfirm() {
+        return confirm;
+    }
 }
