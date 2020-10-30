@@ -114,8 +114,9 @@ public class UserView {
     private JSONRepo repo;
     private Button valgtbtn;
     public void initParkeringsplasser() {
-        bestillinger = repo.LoadFileBestillinger("bestillinger.json");
         repo = new JSONRepo();
+
+        bestillinger = repo.LoadFileBestillinger("bestillinger.json");
         for (int x = 0; x < vp.getButtons().size(); x++) {
             if (vp.getRadioGroup().getSelectedToggle() == vp.getButtons().get(x)) {
 
@@ -129,6 +130,7 @@ public class UserView {
                 infoPane.add(vp.getLedigplasser().get(x), 0, 3);
                 parkButtons = new Button[vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())][vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())];
                 parkButtonsBool = new Boolean[vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())][vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())];
+
                 for (int i = 0; i < parkButtons.length; i++) {
                     for (int j = 0; j < parkButtons.length; j++) {
                         parkButtons[i][j] = new Button();
@@ -138,12 +140,28 @@ public class UserView {
                         parkButtons[i][j].setTextFill(Color.WHITE);
                         parkButtons[i][j].setFont(new Font("Arial", 16));
                         parkButtons[i][j].setPrefSize(200, 100);
-                        parkButtons[i][j].setId("parkImg");
+                        //     System.out.println("\n" + bestillinger.size());
 
                         int finalI = i;
                         int finalJ = j;
                         int finalX = x;
                         int finalX1 = x;
+
+                            for (int ii = 0; ii < bestillinger.size(); ii++) {
+
+                                if (bestillinger.get(ii).getRutenr() == count) {
+                                    parkButtons[i][j].setId("parkimg2");
+                                    parkButtons[i][j].setDisable(true);
+
+                                } else {
+                                    parkButtons[i][j].setId("parkImg");
+
+                                }
+                            }
+
+
+
+
                         parkButtons[i][j].setOnAction(action -> {
 
                             BestillingView bv = new BestillingView(stage, vp, vp.getParkeringsnavner().get(finalX), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())) );
@@ -184,7 +202,6 @@ public class UserView {
                             choosePane.setVisible(true);
                             */
                 VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage);
-                editParkeringsplass2();
 
             }
 
@@ -192,41 +209,6 @@ public class UserView {
         });
     }
     int count = 0;
-
-    public void editParkeringsplass(Button btn){
-                for (int i = 0; i < parkButtons.length; i++) {
-                    for (int j = 0; j < parkButtons.length; j++) {
-                        count++;
-                        parkButtons[i][j].setText(String.valueOf(count));
-                        parkButtons[i][j].setTextFill(Color.WHITE);
-                        parkButtons[i][j].setFont(new Font("Arial", 16));
-                        parkButtons[i][j].setPrefSize(200, 100);
-                        if (parkButtons[i][j] == btn) {
-                            parkButtons[i][j].setId("parkimg2");
-
-                        } else {
-                            parkButtons[i][j].setId("parkImg");
-
-                        }
-
-                    }
-                }
-
-
-
-            }
-
-
-
-    public void editParkeringsplass2(){
-
-        }
-
-
-
-
-
-
 
 
 

@@ -139,9 +139,6 @@ public class VelgParkeringsPlass {
         blur.setInput(new ColorAdjust(0, 0, 0.4, 0));
 
 
-        for (int i = 0; i < parkeringsplasser.size(); i++) {
-            System.out.println(parkeringsplasser.get(i).toString());
-        }
 
 
         confirmSelect.setOnAction(action -> {
