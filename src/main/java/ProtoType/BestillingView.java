@@ -60,10 +60,11 @@ public class BestillingView {
     private Text prisPerTime;
 
 
-    private ArrayList<Bestilling> bestillinger = new ArrayList<>();
     private Button btn;
     private JSONRepo repo;
     private Button confirm;
+
+    private  Spinner<Integer> spinner, spinner2, spinner3, spinner4;
     public BestillingView(Stage stage, VelgParkeringsPlass vp, Text parkeringsnavn, Text  rute, Text prisPerTime){
         this.parkeringsnavn = parkeringsnavn;
         this.prisPerTime = prisPerTime;
@@ -151,10 +152,10 @@ public class BestillingView {
 
 
         Label hourL = new Label("Time: ");
-        final Spinner<Integer> spinner = new Spinner<Integer>();
+       spinner = new Spinner<Integer>();
 
         Label minuteL = new Label("minutt: ");
-        final Spinner<Integer> spinner2 = new Spinner<Integer>();
+        spinner2 = new Spinner<Integer>();
 
 
         Date date = new Date();
@@ -180,10 +181,10 @@ public class BestillingView {
 
 
         Label hourL2 = new Label("Time: ");
-        final Spinner<Integer> spinner3 = new Spinner<Integer>();
+       spinner3 = new Spinner<Integer>();
 
         Label minuteL2 = new Label("minutt: ");
-        final Spinner<Integer> spinner4 = new Spinner<Integer>();
+         spinner4 = new Spinner<Integer>();
         SpinnerValueFactory<Integer> hour2 = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(  calendar.get(Calendar.HOUR_OF_DAY), 24,   calendar.get(Calendar.HOUR_OF_DAY));
         SpinnerValueFactory<Integer> minut2 = //
@@ -232,7 +233,7 @@ public class BestillingView {
         goBack.setId("goback");
         goBack.setPrefSize(50, 50);
 
-        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.initParkeringsplasser(); userView.editParkeringsplass(btn);});
+        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.initParkeringsplasser(); });
 
         bestillingPane.add(goBack, 2, 11, 2,1);
 
@@ -245,15 +246,35 @@ public class BestillingView {
 
     }
 
-    public ArrayList<Bestilling> getBestillinger() {
-        return bestillinger;
-    }
+
 
     public Scene getScene(){
         return scene;
     }
 
+    public TextField getTlf() {
+        return tlf;
+    }
 
+    public Spinner<Integer> getSpinner() {
+        return spinner;
+    }
+
+    public Spinner<Integer> getSpinner2() {
+        return spinner2;
+    }
+
+    public Spinner<Integer> getSpinner3() {
+        return spinner3;
+    }
+
+    public Spinner<Integer> getSpinner4() {
+        return spinner4;
+    }
+
+    public TextField getNavn() {
+        return navn;
+    }
 
     public Button getConfirm() {
         return confirm;

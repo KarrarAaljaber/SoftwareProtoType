@@ -148,7 +148,7 @@ public class VelgParkeringsPlass {
 
 
             UserView view = new UserView(stage, this);
-            view.initParkeringsplasser();view.editParkeringsplass2();
+            view.initParkeringsplasser();
         });
 
     }

@@ -69,6 +69,7 @@ public class UserView {
     LinearGradient linearGradient =
             new LinearGradient(0, 0, 1, 0, true, CycleMethod.REPEAT, stops);
 
+    private ArrayList<Bestilling> bestillinger = new ArrayList<>();
 
 
     private VelgParkeringsPlass vp;
@@ -113,6 +114,7 @@ public class UserView {
     private JSONRepo repo;
     private Button valgtbtn;
     public void initParkeringsplasser() {
+        bestillinger = repo.LoadFileBestillinger("bestillinger.json");
         repo = new JSONRepo();
         for (int x = 0; x < vp.getButtons().size(); x++) {
             if (vp.getRadioGroup().getSelectedToggle() == vp.getButtons().get(x)) {
@@ -148,10 +150,11 @@ public class UserView {
                             bv.getConfirm().setOnAction(action2 ->{
                                 parkButtonsBool[finalI][finalJ] = true;
 
-                                bv.getBestillinger().add(new Bestilling(LaunchProtoType.loggedon, 22,"dd", "ddd", "dd", 22, 22,22,22));
+                               bestillinger.add(new Bestilling(LaunchProtoType.loggedon,   Integer.valueOf( parkButtons[finalI][finalJ].getText()),vp.getParkeringsnavner().get(finalX).getText(), bv.getNavn().getText(), bv.getTlf().getText(), bv.getSpinner().getValue(),  bv.getSpinner2().getValue(),
+                                        bv.getSpinner3().getValue(), bv.getSpinner4().getValue()));
                                 parkButtons[finalI][finalJ].setId("parkimg2");
                                 parkButtons[finalI][finalJ].setDisable(true);
-                                repo.WriteToJSONBestilling("bestillinger.json", bv.getBestillinger());
+                                repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
                                 stage.setScene(scene);
                             });
                         });

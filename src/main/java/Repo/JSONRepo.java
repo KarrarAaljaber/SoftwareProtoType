@@ -26,7 +26,7 @@ public class JSONRepo implements CRUD {
     private ArrayList<Bestilling> bestillinger = new ArrayList<>();
 
 
-    public ArrayList<Konto> LoadFileBestillinger(String s){
+    public ArrayList<Bestilling> LoadFileBestillinger(String s){
         try{
             Bestilling[] bes = obj.readValue(new File(s), Bestilling[].class);
 
@@ -39,7 +39,7 @@ public class JSONRepo implements CRUD {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return kontoer;
+        return bestillinger;
     }
     public ArrayList<Konto> LoadFileKonto(String s){
         try{

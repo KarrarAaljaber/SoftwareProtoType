@@ -4,11 +4,11 @@
     "passord" : "123"
   },
   "rutenr" : 22,
-  "parkeringsplassnavn" : "dd",
-  "fullnavn" : "ddd",
-  "tlfnr" : "dd",
-  "fraTime" : 22,
-  "fraMinut" : 22,
-  "tilTime" : 22,
-  "tilMinut" : 22
+  "parkeringsplassnavn" : "ParkeringsNavn: Halden Tista Sentrum",
+  "fullnavn" : "kar",
+  "tlfnr" : "123",
+  "fraTime" : 21,
+  "fraMinut" : 18,
+  "tilTime" : 21,
+  "tilMinut" : 18
 } ]
