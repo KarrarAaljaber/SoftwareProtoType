@@ -23,9 +23,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import kotlin.reflect.KCallable;
 
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class UserView {
@@ -92,7 +98,6 @@ public class UserView {
 
 
 
-        backgroundContainer.setStyle("-fx-background-color:  white");
         buttonspane.setMaxSize(600, 600);
         buttonspane.setTranslateX(50);
 
@@ -152,6 +157,31 @@ public class UserView {
                                 if (bestillinger.get(ii).getRutenr() == count) {
                                     parkButtons[i][j].setId("parkimg2");
                                     parkButtons[i][j].setDisable(true);
+                                    DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss" );
+                                    Calendar calendar =   GregorianCalendar.getInstance();
+                                    calendar.add(Calendar.HOUR, bestillinger.get(ii).getTilTime());
+                                    calendar.add(Calendar.MINUTE, bestillinger.get(ii).getTilMinut());
+                                    final Timeline timeline = new Timeline(
+                                            new KeyFrame(
+                                                    Duration.millis( 500 ),
+                                                    event -> {
+                                                        final long diff =  System.currentTimeMillis();
+                                                        if ( diff < 0 ) {
+                                                            parkButtons[finalI][finalJ].setText( timeFormat.format( 0 ) );
+
+                                                        } else {
+                                                            parkButtons[finalI][finalJ].setText( timeFormat.format(   diff  ));
+                                                            System.out.println("dif  " + diff);
+                                                            System.out.println("calender  "   + calendar.getTimeInMillis());
+
+                                                        }
+                                                    }
+                                            )
+                                    );
+                                    timeline.setCycleCount( Animation.INDEFINITE );
+                                    timeline.play();
+
+
 
                                 } else {
                                     parkButtons[i][j].setId("parkImg");
