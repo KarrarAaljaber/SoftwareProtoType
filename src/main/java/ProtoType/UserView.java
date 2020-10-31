@@ -159,25 +159,34 @@ public class UserView {
                                     parkButtons[i][j].setDisable(true);
                                     DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss" );
                                     Calendar calendar =   GregorianCalendar.getInstance();
-                                    calendar.add(Calendar.HOUR, bestillinger.get(ii).getTilTime());
-                                    calendar.add(Calendar.MINUTE, bestillinger.get(ii).getTilMinut());
-                                    final Timeline timeline = new Timeline(
-                                            new KeyFrame(
-                                                    Duration.millis( 500 ),
-                                                    event -> {
-                                                        final long diff =  System.currentTimeMillis();
-                                                        if ( diff < 0 ) {
-                                                            parkButtons[finalI][finalJ].setText( timeFormat.format( 0 ) );
+                                    calendar.set(calendar.get(Calendar.YEAR),  calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_YEAR), bestillinger.get(ii).getTilTime(),
+                                            bestillinger.get(ii).getTilMinut()  );
+                                     Timeline timeline = new Timeline();
+                                    timeline.getKeyFrames().add(   new KeyFrame(
+                                            Duration.millis( 500 ),
+                                            event -> {
+                                                final long diff =  System.currentTimeMillis();
+                                                if ( diff < 0 ) {
+                                                    parkButtons[finalI][finalJ].setText( timeFormat.format( 0 ) );
 
-                                                        } else {
-                                                            parkButtons[finalI][finalJ].setText( timeFormat.format(   diff  ));
-                                                            System.out.println("dif  " + diff);
-                                                            System.out.println("calender  "   + calendar.getTimeInMillis());
+                                                } else {
+                                                    parkButtons[finalI][finalJ].setText( timeFormat.format(    calendar.getTimeInMillis()  - diff   ));
+                                                    System.out.println("millis: "  + (calendar.getTimeInMillis()  - diff) + "Time : " +
+                                                            timeFormat.format(    calendar.getTimeInMillis()  - diff   ));
+                                                    if( timeFormat.format(    calendar.getTimeInMillis()  - diff   ) == "00:00:00"){
+                                                        System.exit(0);
 
-                                                        }
+                                                        parkButtons[finalI][finalI].setId("parkImg");
+                                                        parkButtons[finalI][finalI].setText(String.valueOf(count));
+                                                        timeline.stop();
+
+
                                                     }
-                                            )
-                                    );
+
+                                                }
+                                            }
+                                    ));
+
                                     timeline.setCycleCount( Animation.INDEFINITE );
                                     timeline.play();
 
