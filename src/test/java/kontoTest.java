@@ -23,7 +23,8 @@ public class kontoTest {
             }
         }
         if(!t) {
-            Assert.fail("Konto finnes ikke");
+            Assert.assertFalse(false);
+            System.out.println("Konto finnes ikke");
         }
     }
 }
