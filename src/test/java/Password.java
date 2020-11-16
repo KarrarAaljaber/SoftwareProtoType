@@ -14,7 +14,7 @@ public class Password {
     @ParameterizedTest
     @ValueSource(strings = {"123", "bag", "Test", "Gay", "SSs"})
     public void testPassword(String pass) {
-        KontoList = konto.LoadFile2("Konto.json");
+        KontoList = konto.LoadFileKonto("Konto.json");
         boolean t = false;
         for (Konto value : KontoList) {
             user.setPassord(pass);
