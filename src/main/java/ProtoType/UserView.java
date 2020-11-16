@@ -153,8 +153,9 @@ public class UserView {
                         int finalX1 = x;
 
                             for (int ii = 0; ii < bestillinger.size(); ii++) {
+                                System.out.println("pk navn "  +vp.getParkeringsplasser().get(x).getParkeringnavn() + "....." + bestillinger.get(ii).getParkeringsplassnavn() + ".....");
 
-                                if (bestillinger.get(ii).getRutenr() == count) {
+                                if (bestillinger.get(ii).getRutenr() == count && (  vp.getParkeringsplasser().get(x).getParkeringnavn().equals(bestillinger.get(ii).getParkeringsplassnavn()) )) {
                                     parkButtons[i][j].setId("parkimg2");
                                     parkButtons[i][j].setDisable(true);
                                     DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss" );
@@ -203,11 +204,11 @@ public class UserView {
 
                         parkButtons[i][j].setOnAction(action -> {
 
-                            BestillingView bv = new BestillingView(stage, vp, vp.getParkeringsnavner().get(finalX), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())) );
+                            BestillingView bv = new BestillingView(stage, vp, new Text(vp.getParkeringsplasser().get(finalX).getParkeringnavn()), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())) );
                             bv.getConfirm().setOnAction(action2 ->{
                                 parkButtonsBool[finalI][finalJ] = true;
 
-                               bestillinger.add(new Bestilling(LaunchProtoType.loggedon,   Integer.valueOf( parkButtons[finalI][finalJ].getText()),vp.getParkeringsnavner().get(finalX).getText(), bv.getNavn().getText(), bv.getTlf().getText(), bv.getSpinner().getValue(),  bv.getSpinner2().getValue(),
+                               bestillinger.add(new Bestilling(LaunchProtoType.loggedon,   Integer.valueOf( parkButtons[finalI][finalJ].getText()),vp.getParkeringsplasser().get(finalX).getParkeringnavn(), bv.getNavn().getText(), bv.getTlf().getText(), bv.getSpinner().getValue(),  bv.getSpinner2().getValue(),
                                         bv.getSpinner3().getValue(), bv.getSpinner4().getValue()));
                                 parkButtons[finalI][finalJ].setDisable(true);
                                 repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
@@ -240,7 +241,6 @@ public class UserView {
                             choosePane.setVisible(true);
                             */
                 VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage);
-
             }
 
 

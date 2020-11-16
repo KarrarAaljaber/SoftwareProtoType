@@ -238,10 +238,7 @@ public class BestillingView {
         bestillingPane.add(goBack, 2, 11, 2,1);
 
 
-        confirm.setOnAction(action->{
 
-
-        });
 
 
     }
