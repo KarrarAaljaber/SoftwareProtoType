@@ -120,20 +120,18 @@ public class JSONRepo implements CRUD {
         }
     }
 
-    public ArrayList<Parkeringsplass>getObservationsList(){
-        return parkeringsplasser;
-    }
     public ArrayList<Konto> getKontoer(){return kontoer;}
-  /*
+
     @Override
-    public ArrayList<Observation> addObservation(int ID, String name, Animals animals, Location location, String discoveredTime, int amountFound, String pictureUrl, String comment) {
-        ArrayList<Observation> observations = getObservationsList();
+    public ArrayList<Konto> addKonto(String navn, String passord) {
+        ArrayList<Konto> kontoer = getKontoer();
 
-        observations.add(new Observation(ID, name, animals, location, discoveredTime, amountFound, pictureUrl, comment));
+        kontoer.add(new Konto(navn, passord));
 
-        return observations;
+        return kontoer;
     }
 
+/*
     @Override
     public ArrayList<Observation>  deleteObservation (int ID) {
         ArrayList<Observation> observations = getObservationsList();

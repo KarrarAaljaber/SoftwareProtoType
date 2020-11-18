@@ -77,6 +77,9 @@ public class LaunchProtoType extends Application {
         Button login = new Button("Login");
         login.setMinSize(100,25);
 
+        //registering
+        Label regLabel = new Label("Dont have an  account? ");
+        Button reg = new Button("Register");
 
 
         grid.setAlignment(Pos.CENTER);
@@ -88,6 +91,9 @@ public class LaunchProtoType extends Application {
         grid.add(adminLabel,0, 2);
         grid.add(radioBox, 1, 2);
         grid.add(login, 2, 2);
+        grid.add(regLabel, 0, 3 );
+        grid.add(reg, 1,3);
+
         grid.setVgap(5);
         grid.setId("grid");
 
@@ -113,6 +119,10 @@ public class LaunchProtoType extends Application {
             }
         }
 
+        });
+        reg.setOnAction(action ->{
+            RegisterView regview = new RegisterView(stage);
+            stage.setScene(regview.getScene());
         });
 
 
