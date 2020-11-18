@@ -131,32 +131,21 @@ public class JSONRepo implements CRUD {
         return kontoer;
     }
 
-/*
-    @Override
-    public ArrayList<Observation>  deleteObservation (int ID) {
-        ArrayList<Observation> observations = getObservationsList();
-        for(int i =0; i < observations.size(); i++){
-            if(observations.get(i).getID() == ID){
-                observations.remove(i);
-            }
-        }
-
-        return observations;
+    public ArrayList<Bestilling> getBestillinger() {
+        return bestillinger;
     }
 
     @Override
-    public ArrayList<Observation> update(int ID, String name, Animals animals, Location location, String discoveredTime, int amountFound, String pictureUrl, String comment) {
-
-        ArrayList<Observation> observations = getObservationsList();
-        for(int i =0; i < observations.size(); i++){
-            if(observations.get(i).getID() == ID){
-                observations.remove(i);
+    public ArrayList<Bestilling>  deleteBestilling (int rutenr) {
+        ArrayList<Bestilling> bestillinger = getBestillinger();
+        for(int i =0; i < bestillinger.size(); i++){
+            if(bestillinger.get(i).getRutenr() == rutenr){
+                bestillinger.remove(i);
             }
         }
-        Observation observation = new Observation(ID, name, animals, location, discoveredTime, amountFound, pictureUrl, comment);
-        observations.add(observation);
-        return observations;
+
+        return bestillinger;
     }
-*/
+
 
 }

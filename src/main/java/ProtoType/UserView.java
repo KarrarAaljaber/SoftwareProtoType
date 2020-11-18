@@ -153,10 +153,11 @@ public class UserView {
                         int finalX1 = x;
 
                             for (int ii = 0; ii < bestillinger.size(); ii++) {
-                                System.out.println("pk navn "  +vp.getParkeringsplasser().get(x).getParkeringnavn() + "....." + bestillinger.get(ii).getParkeringsplassnavn() + ".....");
 
                                 if (bestillinger.get(ii).getRutenr() == count && (  vp.getParkeringsplasser().get(x).getParkeringnavn().equals(bestillinger.get(ii).getParkeringsplassnavn()) )) {
                                     parkButtons[i][j].setId("parkimg2");
+                                    String rutnr = parkButtons[finalI][finalJ].getText();
+
                                     parkButtons[i][j].setDisable(true);
                                     DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss" );
                                     Calendar calendar =   GregorianCalendar.getInstance();
@@ -172,15 +173,21 @@ public class UserView {
 
                                                 } else {
                                                     parkButtons[finalI][finalJ].setText( timeFormat.format(    calendar.getTimeInMillis()  - diff   ));
-                                                    System.out.println("millis: "  + (calendar.getTimeInMillis()  - diff) + "Time : " +
+                                                 /*   System.out.println("millis: "  + (calendar.getTimeInMillis()  - diff) + "Time : " +
                                                             timeFormat.format(    calendar.getTimeInMillis()  - diff   ));
-                                                    if( timeFormat.format(    calendar.getTimeInMillis()  - diff   ) == "00:00:00"){
-                                                        System.exit(0);
+                                                   */
+                                                    if( timeFormat.format(    calendar.getTimeInMillis()  - diff   ).equals("00:00:00")) {
+                                                        bestillinger =  repo.deleteBestilling(Integer.valueOf(rutnr));
+                                                        System.out.print("test: " + rutnr);
+                                                        repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
 
                                                         parkButtons[finalI][finalI].setId("parkImg");
-                                                        parkButtons[finalI][finalI].setText(String.valueOf(count));
+                                                        parkButtons[finalI][finalI].setText(rutnr);
                                                         timeline.stop();
 
+
+
+                                                    }else{
 
                                                     }
 
@@ -188,10 +195,10 @@ public class UserView {
                                             }
                                     ));
 
+
+
                                     timeline.setCycleCount( Animation.INDEFINITE );
                                     timeline.play();
-
-
 
                                 } else {
                                     parkButtons[i][j].setId("parkImg");
@@ -199,6 +206,10 @@ public class UserView {
                                 }
                             }
 
+                            if(bestillinger.size()  == 0){
+                                parkButtons[i][j].setId("parkImg");
+
+                            }
 
 
 
@@ -212,6 +223,7 @@ public class UserView {
                                         bv.getSpinner3().getValue(), bv.getSpinner4().getValue()));
                                 parkButtons[finalI][finalJ].setDisable(true);
                                 repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
+
                                 stage.setScene(scene);
                             });
                         });
