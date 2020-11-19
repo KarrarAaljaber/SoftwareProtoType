@@ -65,7 +65,7 @@ public class BestillingView {
     private Button confirm;
 
     private  Spinner<Integer> spinner, spinner2, spinner3, spinner4;
-
+    private LaunchProtoType lp;
     public BestillingView(Stage stage, VelgParkeringsPlass vp, Text parkeringsnavn, Text  rute, Text prisPerTime){
         this.parkeringsnavn = parkeringsnavn;
         this.prisPerTime = prisPerTime;
@@ -128,7 +128,7 @@ public class BestillingView {
         parkeringsnavn.setId("pkBestilling");
         parkeringsnavn.setWrappingWidth(0);
         Label kontoL = new Label("Konto navn: ");
-        Text konto = new Text(LaunchProtoType.loggedon.getNavn());
+        //Text konto = new Text(LaunchProtoType.loggedon.getNavn());
 
         ruteL = new Label("Rute nr: ");
         bestillingPane.add(parkeringsnavn, 1, 0);
@@ -136,7 +136,7 @@ public class BestillingView {
         bestillingPane.add(ruteL, 0, 1);
         bestillingPane.add(rute, 1, 1);
         bestillingPane.add(kontoL, 0, 2);
-        bestillingPane.add(konto, 1, 2);
+       // bestillingPane.add(konto, 1, 2);
         bestillingPane.add(navnL, 0,3);
         bestillingPane.add(navn, 1,3);
         bestillingPane.add(tlfL, 0,4);
@@ -234,7 +234,7 @@ public class BestillingView {
         goBack.setId("goback");
         goBack.setPrefSize(50, 50);
 
-        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.initParkeringsplasser(); });
+        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp, lp); userView.initParkeringsplasser(); });
 
         bestillingPane.add(goBack, 2, 11, 2,1);
 

@@ -24,7 +24,7 @@ public class LaunchProtoType extends Application {
 
     JSONRepo rep = new JSONRepo();
     ArrayList<Konto> KontoList = new ArrayList<>();
-    public static Konto loggedon;
+    private Konto loggedon;
     public LaunchProtoType(){
         KontoList = rep.LoadFileKonto("Konto.json");
         //rep.WriteToJSONKonto("Konto.json",KontoList);
@@ -110,7 +110,7 @@ public class LaunchProtoType extends Application {
                 loggedon = new Konto(KontoList.get(i).getNavn(), KontoList.get(i).getPassord());
 
 
-                VelgParkeringsPlass vp = new VelgParkeringsPlass(stage);
+                VelgParkeringsPlass vp = new VelgParkeringsPlass(stage, this);
                 stage.setScene(vp.getScene());
 
 
@@ -121,7 +121,7 @@ public class LaunchProtoType extends Application {
 
         });
         reg.setOnAction(action ->{
-            RegisterView regview = new RegisterView(stage);
+            RegisterView regview = new RegisterView(stage, this);
             stage.setScene(regview.getScene());
         });
 
@@ -139,4 +139,11 @@ public class LaunchProtoType extends Application {
         launch(args);
     }
 
+    public Konto getLoggedon() {
+        return loggedon;
+    }
+
+    public void setLoggedon(Konto loggedon) {
+        this.loggedon = loggedon;
+    }
 }

@@ -76,8 +76,10 @@ public class VelgParkeringsPlass {
     };
 
     private Stage stage;
-    public VelgParkeringsPlass(Stage stage){
+    private LaunchProtoType lp;
+    public VelgParkeringsPlass(Stage stage, LaunchProtoType lp){
         this.stage = stage;
+        this.lp = lp;
         root = new StackPane();
         container = new Pane();
         choosePane = new GridPane();
@@ -144,7 +146,7 @@ public class VelgParkeringsPlass {
         confirmSelect.setOnAction(action -> {
 
 
-            UserView view = new UserView(stage, this);
+            UserView view = new UserView(stage, this, lp);
             view.initParkeringsplasser();
         });
 

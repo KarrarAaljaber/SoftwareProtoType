@@ -11,4 +11,17 @@
   "fraMinut" : 49,
   "tilTime" : 20,
   "tilMinut" : 49
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 2,
+  "parkeringsplassnavn" : "Hogskolen i Ostfold",
+  "fullnavn" : "asd",
+  "tlfnr" : "adas",
+  "fraTime" : 20,
+  "fraMinut" : 25,
+  "tilTime" : 21,
+  "tilMinut" : 25
 } ]

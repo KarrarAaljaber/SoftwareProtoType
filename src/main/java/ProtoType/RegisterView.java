@@ -19,9 +19,10 @@ public class RegisterView {
     JSONRepo rep = new JSONRepo();
     ArrayList<Konto> KontoList = new ArrayList<>();
     private Stage stage;
-    public RegisterView(){}
-    public RegisterView(Stage stage){
+    private LaunchProtoType lp;
+    public RegisterView(Stage stage, LaunchProtoType lp){
         this.stage = stage;
+        this.lp = lp;
         KontoList = rep.LoadFileKonto("Konto.json");
         GridPane grid = new GridPane();
         scene = new Scene(grid, 1280, 720);
@@ -80,7 +81,7 @@ public class RegisterView {
                  if(!t) {
                     KontoList = rep.addKonto(username, password);
                     rep.WriteToJSONKonto("Konto.json", KontoList);
-                    VelgParkeringsPlass vp = new VelgParkeringsPlass(stage);
+                    VelgParkeringsPlass vp = new VelgParkeringsPlass(stage, lp);
                     stage.setScene(vp.getScene());
 
                 }

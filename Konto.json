@@ -16,5 +16,7 @@
 }, {
   "navn" : "Test1",
   "passord" : "123"
-}
-]
+}, {
+  "navn" : "kar1",
+  "passord" : "123"
+} ]
