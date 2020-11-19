@@ -4,10 +4,7 @@ import KontoInformasjon.Konto;
 import Repo.JSONRepo;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -16,13 +13,16 @@ import java.util.ArrayList;
 
 public class RegisterView {
     private Scene scene;
-
+    private String username;
+    private String password;
 
     JSONRepo rep = new JSONRepo();
     ArrayList<Konto> KontoList = new ArrayList<>();
     private Stage stage;
-    public RegisterView(Stage stage){
+    private LaunchProtoType lp;
+    public RegisterView(Stage stage, LaunchProtoType lp){
         this.stage = stage;
+        this.lp = lp;
         KontoList = rep.LoadFileKonto("Konto.json");
         GridPane grid = new GridPane();
         scene = new Scene(grid, 1280, 720);
@@ -39,6 +39,7 @@ public class RegisterView {
         nameLabel.setLabelFor(name);
 
 
+
         //password
         PasswordField pass = new PasswordField();
         Label passLabel = new Label("Password: ");
@@ -47,6 +48,7 @@ public class RegisterView {
                 "    -fx-stroke: black;\n" +
                 "    -fx-stroke-width: 1;");
         passLabel.setLabelFor(pass);
+
 
         Button reg = new Button("Register");
 
@@ -62,13 +64,27 @@ public class RegisterView {
         grid.add(text,0, 3);
         text.setVisible(false);
         reg.setOnAction(action ->{
-
+            Alert s = new Alert(Alert.AlertType.NONE);
             if(!name.getText().equals("") || !pass.getText().equals("") ) {
-                KontoList = rep.addKonto(name.getText(), pass.getText());
-                rep.WriteToJSONKonto("Konto.json",KontoList);
-                VelgParkeringsPlass vp = new VelgParkeringsPlass(stage);
-                stage.setScene(vp.getScene());
+                password = pass.getText();
+                username = name.getText();
+                boolean t = false;
+                for (Konto konto : KontoList) {
+                    if (username.equals(konto.getNavn())) {
+                        t = true;
+                        s.setAlertType(Alert.AlertType.ERROR);
+                        s.setContentText("Username exist");
+                        s.show();
+                        break;
+                    }
+                }
+                 if(!t) {
+                    KontoList = rep.addKonto(username, password);
+                    rep.WriteToJSONKonto("Konto.json", KontoList);
+                    VelgParkeringsPlass vp = new VelgParkeringsPlass(stage, lp);
+                    stage.setScene(vp.getScene());
 
+                }
             }else{
                 text.setVisible(true);
             }
@@ -78,4 +94,17 @@ public class RegisterView {
     public Scene getScene() {
         return scene;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setPassword(String password){this.password = password;}
 }

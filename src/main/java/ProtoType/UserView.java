@@ -76,12 +76,13 @@ public class UserView {
             new LinearGradient(0, 0, 1, 0, true, CycleMethod.REPEAT, stops);
 
     private ArrayList<Bestilling> bestillinger = new ArrayList<>();
-
+    private LaunchProtoType lp;
 
     private VelgParkeringsPlass vp;
-    public UserView(Stage stage, VelgParkeringsPlass vp){
+    public UserView(Stage stage, VelgParkeringsPlass vp, LaunchProtoType lp){
         this.vp = vp;
         this.stage = stage;
+        this.lp = lp;
 
         root = new StackPane();
         buttonspane = new GridPane();
@@ -187,8 +188,6 @@ public class UserView {
 
 
 
-                                                    }else{
-
                                                     }
 
                                                 }
@@ -212,7 +211,7 @@ public class UserView {
                             bv.getConfirm().setOnAction(action2 ->{
                                 parkButtonsBool[finalI][finalJ] = true;
 
-                               bestillinger.add(new Bestilling(LaunchProtoType.loggedon,   Integer.valueOf( parkButtons[finalI][finalJ].getText()),vp.getParkeringsplasser().get(finalX).getParkeringnavn(), bv.getNavn().getText(), bv.getTlf().getText(), bv.getSpinner().getValue(),  bv.getSpinner2().getValue(),
+                               bestillinger.add(new Bestilling(lp.getLoggedon(), Integer.parseInt( parkButtons[finalI][finalJ].getText()),vp.getParkeringsplasser().get(finalX).getParkeringnavn(), bv.getNavn().getText(), bv.getTlf().getText(), bv.getSpinner().getValue(),  bv.getSpinner2().getValue(),
                                         bv.getSpinner3().getValue(), bv.getSpinner4().getValue()));
                                 parkButtons[finalI][finalJ].setDisable(true);
                                 repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
@@ -245,7 +244,7 @@ public class UserView {
                             pane.setVisible(false);
                             choosePane.setVisible(true);
                             */
-                VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage);
+                VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage, lp);
             }
 
 

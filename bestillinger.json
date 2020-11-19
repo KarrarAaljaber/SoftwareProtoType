@@ -1,14 +1,27 @@
 [ {
   "bruker" : {
+    "navn" : "Aleks",
+    "passord" : "123"
+  },
+  "rutenr" : 1,
+  "parkeringsplassnavn" : "Hogskolen i Ostfold",
+  "fullnavn" : "Aleksander",
+  "tlfnr" : "1234",
+  "fraTime" : 19,
+  "fraMinut" : 49,
+  "tilTime" : 20,
+  "tilMinut" : 49
+}, {
+  "bruker" : {
     "navn" : "kar",
     "passord" : "123"
   },
-  "rutenr" : 8,
-  "parkeringsplassnavn" : "Halden Tista Sentrum",
-  "fullnavn" : "",
-  "tlfnr" : "",
+  "rutenr" : 2,
+  "parkeringsplassnavn" : "Hogskolen i Ostfold",
+  "fullnavn" : "asd",
+  "tlfnr" : "adas",
   "fraTime" : 20,
-  "fraMinut" : 16,
-  "tilTime" : 20,
-  "tilMinut" : 18
+  "fraMinut" : 25,
+  "tilTime" : 21,
+  "tilMinut" : 25
 } ]
