@@ -65,6 +65,7 @@ public class BestillingView {
     private Button confirm;
 
     private  Spinner<Integer> spinner, spinner2, spinner3, spinner4;
+
     public BestillingView(Stage stage, VelgParkeringsPlass vp, Text parkeringsnavn, Text  rute, Text prisPerTime){
         this.parkeringsnavn = parkeringsnavn;
         this.prisPerTime = prisPerTime;

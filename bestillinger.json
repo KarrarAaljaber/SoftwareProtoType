@@ -1,1 +1,14 @@
-[ ]
+[ {
+  "bruker" : {
+    "navn" : "Aleks",
+    "passord" : "123"
+  },
+  "rutenr" : 1,
+  "parkeringsplassnavn" : "Hogskolen i Ostfold",
+  "fullnavn" : "Aleksander",
+  "tlfnr" : "1234",
+  "fraTime" : 19,
+  "fraMinut" : 49,
+  "tilTime" : 20,
+  "tilMinut" : 49
+} ]
