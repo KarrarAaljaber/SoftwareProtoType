@@ -1,11 +1,15 @@
 package ProtoType;
 
+import Parkeringsplass.Bestilling;
+import Repo.JSONRepo;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -14,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -27,6 +32,7 @@ public class BestillingView {
 
     private Text parkeringsnavn;
     private Text rute;
+    private Label ruteL;
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
     LocalDateTime now = LocalDateTime.now();
@@ -48,10 +54,17 @@ public class BestillingView {
 
 
 
+
     private Stage stage;
     private VelgParkeringsPlass vp;
     private Text prisPerTime;
 
+
+    private Button btn;
+    private JSONRepo repo;
+    private Button confirm;
+
+    private  Spinner<Integer> spinner, spinner2, spinner3, spinner4;
     public BestillingView(Stage stage, VelgParkeringsPlass vp, Text parkeringsnavn, Text  rute, Text prisPerTime){
         this.parkeringsnavn = parkeringsnavn;
         this.prisPerTime = prisPerTime;
@@ -65,9 +78,7 @@ public class BestillingView {
         bestillingPane.setMaxHeight(600);
         bestillingPane.setMaxWidth(600);
 
-
-
-
+        repo = new JSONRepo();
         root.getChildren().add(bestillingPane);
         root.setStyle("-fx-background-color: rgba(22,22,22,1);");
 
@@ -115,19 +126,25 @@ public class BestillingView {
 
         parkeringsnavn.setId("pkBestilling");
         parkeringsnavn.setWrappingWidth(0);
+        Label kontoL = new Label("Konto navn: ");
+        Text konto = new Text(LaunchProtoType.loggedon.getNavn());
+
+        ruteL = new Label("Rute nr: ");
         bestillingPane.add(parkeringsnavn, 1, 0);
         bestillingPane.add(timeLabel, 0, 0);
-        bestillingPane.add(rute, 0, 1);
-        bestillingPane.add(navnL, 0,2);
-        bestillingPane.add(navn, 1,2);
-        bestillingPane.add(tlfL, 0,3);
-        bestillingPane.add(tlf, 1,3);
-        bestillingPane.add(bilskiltnrL, 0,4);
-        bestillingPane.add(bilskiltnr, 1, 4);
+        bestillingPane.add(ruteL, 0, 1);
+        bestillingPane.add(rute, 1, 1);
+        bestillingPane.add(kontoL, 0, 2);
+        bestillingPane.add(konto, 1, 2);
+        bestillingPane.add(navnL, 0,3);
+        bestillingPane.add(navn, 1,3);
+        bestillingPane.add(tlfL, 0,4);
+        bestillingPane.add(tlf, 1,4);
+        bestillingPane.add(bilskiltnrL, 0,5);
+        bestillingPane.add(bilskiltnr, 1, 5);
 
 
-      //  bestillingPane.setGridLinesVisible(true);
-     //   bestillingPane.setAlignment(Pos.CENTER);
+        bestillingPane.setAlignment(Pos.CENTER);
         bestillingPane.setMinWidth(500);
         bestillingPane.setMinHeight(500);
         bestillingPane.setHgap(20);
@@ -135,10 +152,10 @@ public class BestillingView {
 
 
         Label hourL = new Label("Time: ");
-        final Spinner<Integer> spinner = new Spinner<Integer>();
+       spinner = new Spinner<Integer>();
 
         Label minuteL = new Label("minutt: ");
-        final Spinner<Integer> spinner2 = new Spinner<Integer>();
+        spinner2 = new Spinner<Integer>();
 
 
         Date date = new Date();
@@ -164,10 +181,10 @@ public class BestillingView {
 
 
         Label hourL2 = new Label("Time: ");
-        final Spinner<Integer> spinner3 = new Spinner<Integer>();
+       spinner3 = new Spinner<Integer>();
 
         Label minuteL2 = new Label("minutt: ");
-        final Spinner<Integer> spinner4 = new Spinner<Integer>();
+         spinner4 = new Spinner<Integer>();
         SpinnerValueFactory<Integer> hour2 = //
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(  calendar.get(Calendar.HOUR_OF_DAY), 24,   calendar.get(Calendar.HOUR_OF_DAY));
         SpinnerValueFactory<Integer> minut2 = //
@@ -186,15 +203,15 @@ public class BestillingView {
 
 
 
-        bestillingPane.add(tidbox, 0, 5, 2, 1);
-        bestillingPane.add(tidbox2, 0, 6, 2, 1);
+        bestillingPane.add(tidbox, 0, 6, 2, 1);
+        bestillingPane.add(tidbox2, 0, 7, 2, 1);
 
         bestillingPane.setVgap(10);
 
         //pris
         Label prisprTimeL = new Label("Pris Per Time: ");
-        bestillingPane.add(prisprTimeL, 0, 7);
-        bestillingPane.add(prisPerTime, 1, 7);
+        bestillingPane.add(prisprTimeL, 0, 8);
+        bestillingPane.add(prisPerTime, 1, 8);
 
         Label totalPrisL = new Label("Total Pris: ");
         Text totalPris = new Text();
@@ -204,10 +221,10 @@ public class BestillingView {
         spinner3.valueProperty().addListener((obs, oldValue, newValue) ->
                 totalPris.setText(String.valueOf((newValue - spinner.getValue() ) *Float.valueOf(prisPerTime.getText() ))));
 
-        bestillingPane.add(totalPrisL, 0, 8);
-        bestillingPane.add(totalPris, 1, 8);
-        Button confirm = new Button("bekreft betalling");
-        bestillingPane.add(confirm, 0, 9, 2,1);
+        bestillingPane.add(totalPrisL, 0, 9);
+        bestillingPane.add(totalPris, 1, 9);
+         confirm = new Button("bekreft betalling");
+        bestillingPane.add(confirm, 0, 10, 2,1);
 
 
 
@@ -216,20 +233,47 @@ public class BestillingView {
         goBack.setId("goback");
         goBack.setPrefSize(50, 50);
 
-        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.visParkeringsplass();});
+        goBack.setOnAction(action ->{UserView userView = new UserView(stage, vp); userView.initParkeringsplasser(); });
 
-        bestillingPane.add(goBack, 2, 10, 2,1);
+        bestillingPane.add(goBack, 2, 11, 2,1);
+
+
+
 
 
     }
+
+
 
     public Scene getScene(){
         return scene;
     }
 
+    public TextField getTlf() {
+        return tlf;
+    }
 
+    public Spinner<Integer> getSpinner() {
+        return spinner;
+    }
 
+    public Spinner<Integer> getSpinner2() {
+        return spinner2;
+    }
 
+    public Spinner<Integer> getSpinner3() {
+        return spinner3;
+    }
 
+    public Spinner<Integer> getSpinner4() {
+        return spinner4;
+    }
 
+    public TextField getNavn() {
+        return navn;
+    }
+
+    public Button getConfirm() {
+        return confirm;
+    }
 }

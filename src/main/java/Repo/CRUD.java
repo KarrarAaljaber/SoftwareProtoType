@@ -1,12 +1,14 @@
 package Repo;
 
 
+import KontoInformasjon.Konto;
+import Parkeringsplass.Bestilling;
+
+import java.util.ArrayList;
 
 public interface CRUD {
 
+    ArrayList<Bestilling> deleteBestilling(int rutenr);
 
-
-   // ArrayList<Parkeringsplass> addObservation(int ID, String name, Animals animals, Location location, String discoveredTime, int amountFound, String pictureUrl, String comment);
-   // ArrayList<Observation> deleteObservation(int ID);
-  //  ArrayList<Observation> update(int ID, String name, Animals animals, Location location, String discoveredTime, int amountFound, String pictureUrl, String comment);
+    ArrayList<Konto> addKonto(String navn, String passord);
 }

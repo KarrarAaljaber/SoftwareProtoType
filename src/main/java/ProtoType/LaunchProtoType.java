@@ -22,13 +22,12 @@ import java.util.ArrayList;
 
 public class LaunchProtoType extends Application {
 
-    Konto Test = new Konto("Name", "passord");
     JSONRepo rep = new JSONRepo();
     ArrayList<Konto> KontoList = new ArrayList<>();
+    public static Konto loggedon;
     public LaunchProtoType(){
-        KontoList.add(Test);
-        KontoList = rep.LoadFile2("Konto.json");
-        //rep.WriteToJSON2("Konto.json",KontoList);
+        KontoList = rep.LoadFileKonto("Konto.json");
+        //rep.WriteToJSONKonto("Konto.json",KontoList);
     }
 
     @Override
@@ -78,6 +77,9 @@ public class LaunchProtoType extends Application {
         Button login = new Button("Login");
         login.setMinSize(100,25);
 
+        //registering
+        Label regLabel = new Label("Dont have an  account? ");
+        Button reg = new Button("Register");
 
 
         grid.setAlignment(Pos.CENTER);
@@ -89,6 +91,9 @@ public class LaunchProtoType extends Application {
         grid.add(adminLabel,0, 2);
         grid.add(radioBox, 1, 2);
         grid.add(login, 2, 2);
+        grid.add(regLabel, 0, 3 );
+        grid.add(reg, 1,3);
+
         grid.setVgap(5);
         grid.setId("grid");
 
@@ -102,7 +107,7 @@ public class LaunchProtoType extends Application {
             if(  name.getText().equals(KontoList.get(i).getNavn()) &&  pass.getText().equals(KontoList.get(i).getPassord())){
                 System.out.println("CORrect");
                 text.setVisible(false);
-
+                loggedon = new Konto(KontoList.get(i).getNavn(), KontoList.get(i).getPassord());
 
 
                 VelgParkeringsPlass vp = new VelgParkeringsPlass(stage);
@@ -114,6 +119,10 @@ public class LaunchProtoType extends Application {
             }
         }
 
+        });
+        reg.setOnAction(action ->{
+            RegisterView regview = new RegisterView(stage);
+            stage.setScene(regview.getScene());
         });
 
 

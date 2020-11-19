@@ -17,14 +17,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
+import Parkeringsplass.Bestilling;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import kotlin.reflect.KCallable;
 
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 public class UserView {
@@ -68,6 +75,7 @@ public class UserView {
     LinearGradient linearGradient =
             new LinearGradient(0, 0, 1, 0, true, CycleMethod.REPEAT, stops);
 
+    private ArrayList<Bestilling> bestillinger = new ArrayList<>();
 
 
     private VelgParkeringsPlass vp;
@@ -90,7 +98,6 @@ public class UserView {
 
 
 
-        backgroundContainer.setStyle("-fx-background-color:  white");
         buttonspane.setMaxSize(600, 600);
         buttonspane.setTranslateX(50);
 
@@ -110,86 +117,149 @@ public class UserView {
     }
 
     private JSONRepo repo;
-    public void visParkeringsplass(){
+    private Button valgtbtn;
+    public void initParkeringsplasser() {
+        repo = new JSONRepo();
 
-            for (int x = 0; x < vp.getButtons().size(); x++) {
-                if (vp.getRadioGroup().getSelectedToggle() == vp.getButtons().get(x)) {
+        bestillinger = repo.LoadFileBestillinger("bestillinger.json");
+        for (int x = 0; x < vp.getButtons().size(); x++) {
+            if (vp.getRadioGroup().getSelectedToggle() == vp.getButtons().get(x)) {
 
-                    infoPane.getChildren().clear();
-                    buttonspane.getChildren().clear();
+                infoPane.getChildren().clear();
+                buttonspane.getChildren().clear();
+
+
+                infoPane.add(vp.getParkeringsnavner().get(x), 0, 0);
+                infoPane.add(vp.getAdresser().get(x), 0, 1);
+                infoPane.add(vp.getPriser().get(x), 0, 2);
+                infoPane.add(vp.getLedigplasser().get(x), 0, 3);
+                parkButtons = new Button[vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())][vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())];
+                parkButtonsBool = new Boolean[vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())][vp.getParkeringsplasser().get(x).getPlasser() / (int) Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser())];
+
+                for (int i = 0; i < parkButtons.length; i++) {
+                    for (int j = 0; j < parkButtons.length; j++) {
+                        parkButtons[i][j] = new Button();
+                        parkButtonsBool[i][j] = false;
+                        count++;
+                        parkButtons[i][j].setText(String.valueOf(count));
+                        parkButtons[i][j].setTextFill(Color.WHITE);
+                        parkButtons[i][j].setFont(new Font("Arial", 16));
+                        parkButtons[i][j].setPrefSize(200, 100);
+                        //     System.out.println("\n" + bestillinger.size());
+
+                        int finalI = i;
+                        int finalJ = j;
+                        int finalX = x;
+                        int finalX1 = x;
+
+                            for (int ii = 0; ii < bestillinger.size(); ii++) {
+
+                                if (bestillinger.get(ii).getRutenr() == count && (  vp.getParkeringsplasser().get(x).getParkeringnavn().equals(bestillinger.get(ii).getParkeringsplassnavn()) )) {
+                                    parkButtons[i][j].setId("parkimg2");
+                                    String rutnr = parkButtons[finalI][finalJ].getText();
+
+                                    parkButtons[i][j].setDisable(true);
+                                    DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss" );
+                                    Calendar calendar =   GregorianCalendar.getInstance();
+                                    calendar.set(calendar.get(Calendar.YEAR),  calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_YEAR), bestillinger.get(ii).getTilTime(),
+                                            bestillinger.get(ii).getTilMinut()  );
+                                     Timeline timeline = new Timeline();
+                                    timeline.getKeyFrames().add(   new KeyFrame(
+                                            Duration.millis( 500 ),
+                                            event -> {
+                                                final long diff =  System.currentTimeMillis();
+                                                if ( diff < 0 ) {
+                                                    parkButtons[finalI][finalJ].setText( timeFormat.format( 0 ) );
+
+                                                } else {
+                                                    parkButtons[finalI][finalJ].setText( timeFormat.format(    calendar.getTimeInMillis()  - diff   ));
+                                                 /*   System.out.println("millis: "  + (calendar.getTimeInMillis()  - diff) + "Time : " +
+                                                            timeFormat.format(    calendar.getTimeInMillis()  - diff   ));
+                                                   */
+                                                    if( timeFormat.format(    calendar.getTimeInMillis()  - diff   ).equals("00:00:00")) {
+                                                        bestillinger =  repo.deleteBestilling(Integer.valueOf(rutnr));
+                                                        System.out.print("test: " + rutnr);
+                                                        repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
+
+                                                        parkButtons[finalI][finalI].setId("parkImg");
+                                                        parkButtons[finalI][finalI].setText(rutnr);
+                                                        timeline.stop();
 
 
 
-                    infoPane.add(vp.getParkeringsnavner().get(x), 0, 0);
-                    infoPane.add(vp.getAdresser().get(x), 0, 1);
-                    infoPane.add(vp.getPriser().get(x), 0, 2);
-                    infoPane.add(vp.getLedigplasser().get(x), 0, 3);
-                    parkButtons = new Button[vp.getParkeringsplasser().get(x).getPlasser()][vp.getParkeringsplasser().get(x).getPlasser()];
-                    parkButtonsBool = new Boolean[vp.getParkeringsplasser().get(x).getPlasser()][vp.getParkeringsplasser().get(x).getPlasser()];
-                    int count = 0;
-                    for (int i = 1; i <= vp.getParkeringsplasser().get(x).getPlasser() / Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser()); i++) {
-                        for (int j = 1; j <= vp.getParkeringsplasser().get(x).getPlasser()/ Math.sqrt(vp.getParkeringsplasser().get(x).getPlasser()); j++) {
-                            int finalI = i;
-                            int finalJ = j;
-                            count++;
-                            parkButtons[i][j] = new Button();
-                            parkButtonsBool[i][j] = false;
-                            parkButtons[i][j].setText( String.valueOf(count ));
-                            parkButtons[i][j].setTextFill(Color.WHITE);
-                            parkButtons[i][j].setFont(new Font("Arial", 16));
-                            parkButtons[i][j].setPrefSize(200, 100);
-                            parkButtons[i][j].setId("parkImg");
-                            buttonspane.add(parkButtons[i][j], j , i);
+                                                    }else{
 
-                            int finalX = x;
-                            parkButtons[i][j].setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                    //parkButtonsBool[finalI][finalJ] = false;
-                               //     bestillingPane.setVisible(true);
+                                                    }
 
-                                    //parkButtons[finalI][finalJ].setDisable(true);
-                                BestillingView bv = new BestillingView(stage, vp, vp.getParkeringsnavner().get(finalX), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())));
+                                                }
+                                            }
+                                    ));
 
+
+
+                                    timeline.setCycleCount( Animation.INDEFINITE );
+                                    timeline.play();
+
+                                } else {
+                                    parkButtons[i][j].setId("parkImg");
 
                                 }
-                            });
+                            }
 
-                        }
+                            if(bestillinger.size()  == 0){
+                                parkButtons[i][j].setId("parkImg");
+
+                            }
+
+
+
+                        parkButtons[i][j].setOnAction(action -> {
+
+                            BestillingView bv = new BestillingView(stage, vp, new Text(vp.getParkeringsplasser().get(finalX).getParkeringnavn()), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())) );
+                            bv.getConfirm().setOnAction(action2 ->{
+                                parkButtonsBool[finalI][finalJ] = true;
+
+                               bestillinger.add(new Bestilling(LaunchProtoType.loggedon,   Integer.valueOf( parkButtons[finalI][finalJ].getText()),vp.getParkeringsplasser().get(finalX).getParkeringnavn(), bv.getNavn().getText(), bv.getTlf().getText(), bv.getSpinner().getValue(),  bv.getSpinner2().getValue(),
+                                        bv.getSpinner3().getValue(), bv.getSpinner4().getValue()));
+                                parkButtons[finalI][finalJ].setDisable(true);
+                                repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
+
+                                stage.setScene(scene);
+                            });
+                        });
+
+                        buttonspane.add(parkButtons[i][j], j, i);
+
+
                     }
 
-                    Button goBack = new Button();
-                    goBack.setId("goback");
-                    goBack.setPrefSize(50, 50);
 
-                    infoPane.add(goBack, 1, 2);
+                }
+            }
+        }
+        Button goBack = new Button();
+        goBack.setId("goback");
+        goBack.setPrefSize(50, 50);
+
+        infoPane.add(goBack, 1, 2);
 
 
-                    goBack.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
+        goBack.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
                             /*
                             infoPane.setVisible(false);
                             pane.setVisible(false);
                             choosePane.setVisible(true);
                             */
-                           // parkButtons = new Button[0][0];
-                            VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage);
-
-
-
-                        }
-
-
-                    });
-
-                }
+                VelgParkeringsPlass velgParkeringsPlass = new VelgParkeringsPlass(stage);
             }
 
 
-
-
+        });
     }
+    int count = 0;
+
 
 
     public void initPaneBakgrunn(){

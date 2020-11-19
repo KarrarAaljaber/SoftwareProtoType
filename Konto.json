@@ -1,19 +1,13 @@
 [ {
   "navn" : "kar",
   "passord" : "123"
-},
-  {
-    "navn" : "Robin",
-    "passord" : "123"
-  },
-
-  {
-    "navn" : "Aleks",
-    "passord" : "123"
-  }
-,
-
-  {
-    "navn" : "Yaqub",
-    "passord" : "123"
-  }]
+}, {
+  "navn" : "Robin",
+  "passord" : "123"
+}, {
+  "navn" : "Aleks",
+  "passord" : "123"
+}, {
+  "navn" : "Yaqub",
+  "passord" : "123"
+}]

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import Parkeringsplass.Bestilling;
 
 public class JSONRepo implements CRUD {
 
@@ -22,9 +23,25 @@ public class JSONRepo implements CRUD {
     private ObjectMapper obj =new ObjectMapper();
     private ArrayList<Parkeringsplass> parkeringsplasser = new ArrayList<>();
     private ArrayList<Konto> kontoer = new ArrayList<>();
+    private ArrayList<Bestilling> bestillinger = new ArrayList<>();
 
 
-    public ArrayList<Konto> LoadFile2(String s){
+    public ArrayList<Bestilling> LoadFileBestillinger(String s){
+        try{
+            Bestilling[] bes = obj.readValue(new File(s), Bestilling[].class);
+
+            bestillinger.addAll(Arrays.asList(bes));
+
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bestillinger;
+    }
+    public ArrayList<Konto> LoadFileKonto(String s){
         try{
             Konto[] kontos = obj.readValue(new File(s), Konto[].class);
 
@@ -39,7 +56,7 @@ public class JSONRepo implements CRUD {
         }
         return kontoer;
     }
-    public void WriteToJSON2(String fileName, ArrayList<Konto> konto){
+    public void WriteToJSONKonto(String fileName, ArrayList<Konto> konto){
         try{
             File file = new File(fileName);
             obj.registerModule(new JavaTimeModule());
@@ -55,6 +72,21 @@ public class JSONRepo implements CRUD {
         }
     }
 
+    public void WriteToJSONBestilling(String fileName, ArrayList<Bestilling> bestillinger){
+        try{
+            File file = new File(fileName);
+            obj.registerModule(new JavaTimeModule());
+            obj.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            obj.writerWithDefaultPrettyPrinter().writeValue(file, bestillinger);
+
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public ArrayList<Parkeringsplass> LoadFile(String s){
         try{
@@ -88,45 +120,32 @@ public class JSONRepo implements CRUD {
         }
     }
 
-    public ArrayList<Parkeringsplass>getObservationsList(){
-        return parkeringsplasser;
-    }
     public ArrayList<Konto> getKontoer(){return kontoer;}
-  /*
+
     @Override
-    public ArrayList<Observation> addObservation(int ID, String name, Animals animals, Location location, String discoveredTime, int amountFound, String pictureUrl, String comment) {
-        ArrayList<Observation> observations = getObservationsList();
+    public ArrayList<Konto> addKonto(String navn, String passord) {
+        ArrayList<Konto> kontoer = getKontoer();
 
-        observations.add(new Observation(ID, name, animals, location, discoveredTime, amountFound, pictureUrl, comment));
+        kontoer.add(new Konto(navn, passord));
 
-        return observations;
+        return kontoer;
+    }
+
+    public ArrayList<Bestilling> getBestillinger() {
+        return bestillinger;
     }
 
     @Override
-    public ArrayList<Observation>  deleteObservation (int ID) {
-        ArrayList<Observation> observations = getObservationsList();
-        for(int i =0; i < observations.size(); i++){
-            if(observations.get(i).getID() == ID){
-                observations.remove(i);
+    public ArrayList<Bestilling>  deleteBestilling (int rutenr) {
+        ArrayList<Bestilling> bestillinger = getBestillinger();
+        for(int i =0; i < bestillinger.size(); i++){
+            if(bestillinger.get(i).getRutenr() == rutenr){
+                bestillinger.remove(i);
             }
         }
 
-        return observations;
+        return bestillinger;
     }
 
-    @Override
-    public ArrayList<Observation> update(int ID, String name, Animals animals, Location location, String discoveredTime, int amountFound, String pictureUrl, String comment) {
-
-        ArrayList<Observation> observations = getObservationsList();
-        for(int i =0; i < observations.size(); i++){
-            if(observations.get(i).getID() == ID){
-                observations.remove(i);
-            }
-        }
-        Observation observation = new Observation(ID, name, animals, location, discoveredTime, amountFound, pictureUrl, comment);
-        observations.add(observation);
-        return observations;
-    }
-*/
 
 }

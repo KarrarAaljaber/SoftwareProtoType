@@ -10,7 +10,7 @@ public class kontoTest {
     JSONRepo konto = new JSONRepo();
     @Test
     public void KontoFinnes(){
-        KontoList = konto.LoadFile2("Konto.json");
+        KontoList = konto.LoadFileKonto("Konto.json");
         user.setNavn("Aleks");
         user.setPassord("123");
         boolean t = false;

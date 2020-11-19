@@ -15,7 +15,7 @@ public class Username {
     @ParameterizedTest
     @ValueSource(strings = {"Yaqub","Aleks","Robin","kar","SSs"})
     public void testUsername(String input) {
-        KontoList = konto.LoadFile2("Konto.json");
+        KontoList = konto.LoadFileKonto("Konto.json");
         boolean t = false;
         for (Konto value : KontoList) {
             user.setNavn(input);
