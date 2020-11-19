@@ -10,4 +10,11 @@
 }, {
   "navn" : "Yaqub",
   "passord" : "123"
-}]
+}, {
+  "navn" : "Test",
+  "passord" : "123"
+}, {
+  "navn" : "Test1",
+  "passord" : "123"
+}
+]
