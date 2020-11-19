@@ -142,8 +142,8 @@ public class UserView {
                         parkButtonsBool[i][j] = false;
                         count++;
                         parkButtons[i][j].setText(String.valueOf(count));
-                        parkButtons[i][j].setTextFill(Color.WHITE);
-                        parkButtons[i][j].setFont(new Font("Arial", 16));
+                        parkButtons[i][j].setId("parkImg");
+
                         parkButtons[i][j].setPrefSize(200, 100);
                         //     System.out.println("\n" + bestillinger.size());
 
@@ -200,16 +200,9 @@ public class UserView {
                                     timeline.setCycleCount( Animation.INDEFINITE );
                                     timeline.play();
 
-                                } else {
-                                    parkButtons[i][j].setId("parkImg");
-
                                 }
                             }
 
-                            if(bestillinger.size()  == 0){
-                                parkButtons[i][j].setId("parkImg");
-
-                            }
 
 
 
