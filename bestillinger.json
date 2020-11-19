@@ -1,1 +1,14 @@
-[  ]
+[ {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 8,
+  "parkeringsplassnavn" : "Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 20,
+  "fraMinut" : 16,
+  "tilTime" : 20,
+  "tilMinut" : 18
+} ]
