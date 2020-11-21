@@ -20,6 +20,7 @@ public class RegisterView {
     ArrayList<Konto> KontoList = new ArrayList<>();
     private Stage stage;
     private LaunchProtoType lp;
+    public RegisterView(){}
     public RegisterView(Stage stage, LaunchProtoType lp){
         this.stage = stage;
         this.lp = lp;

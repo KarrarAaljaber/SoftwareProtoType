@@ -142,11 +142,11 @@ public class UserView {
                         parkButtons[i][j] = new Button();
                         parkButtonsBool[i][j] = false;
                         count++;
-                        parkButtons[i][j].setText(String.valueOf(count));
                         parkButtons[i][j].setId("parkImg");
 
+                        parkButtons[i][j].setText(String.valueOf(count));
+
                         parkButtons[i][j].setPrefSize(200, 100);
-                        //     System.out.println("\n" + bestillinger.size());
 
                         int finalI = i;
                         int finalJ = j;

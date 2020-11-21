@@ -66,7 +66,6 @@
 #parkChooseImg{
 
 
-
     -fx-border-color: black;
     -fx-border-width: 2px;
 }
@@ -90,10 +89,11 @@
     -fx-border-color: black;
     -fx-border-width: 2px;
     -fx-font-weight: 900;
+
 }
 #parkImg{
 
-    /* the gradient on top, adjust color and opacity to your taste */
+    -fx-font : 50px "serief";
 
 
     -fx-background-color:rgba(0, 255, 0, 1);
@@ -103,11 +103,9 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 
-    -fx-text-fill: red;
-    -fx-font-size: 30px;
+    -fx-text-fill: #ffffff;
     -fx-border-color: black;
     -fx-border-width: 2px;
-    -fx-font-weight: 900;
 
 
 }

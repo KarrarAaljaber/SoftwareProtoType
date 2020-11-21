@@ -130,7 +130,7 @@ public class VelgParkeringsPlass {
             prisi.setWrappingWidth(0);
             priser.add(prisi);
 
-            Text LedigePlasseri = new Text("Antall Ledige Plasser: " + parkeringsplasser.get(i).getPlasser());
+            Text LedigePlasseri = new Text("Antall parkering's spotter: " + parkeringsplasser.get(i).getPlasser());
             LedigePlasseri.setId("text");
             LedigePlasseri.setWrappingWidth(0);
             ledigplasser.add(LedigePlasseri);
