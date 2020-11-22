@@ -1,7 +1,6 @@
 package Parkeringsplass;
 
 import KontoInformasjon.Konto;
-import Utils.Tid;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Bestilling {

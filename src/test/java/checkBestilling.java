@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-public class checkBestilling {
+public class checkBestilling extends CheckOmraadeNavn {
 
     Konto bruker = new Konto("Aleks", "123");
     Bestilling test = new Bestilling(bruker, 1, "Høgskolen i Øsfold", "navn", "003213",19, 20,20,20);

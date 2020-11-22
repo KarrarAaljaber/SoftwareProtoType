@@ -37,4 +37,30 @@
   "fraMinut" : 18,
   "tilTime" : 24,
   "tilMinut" : 32
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 13,
+  "parkeringsplassnavn" : "Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 23,
+  "fraMinut" : 43,
+  "tilTime" : 23,
+  "tilMinut" : 43
+}, {
+  "bruker" : {
+    "navn" : "kar",
+    "passord" : "123"
+  },
+  "rutenr" : 23,
+  "parkeringsplassnavn" : "Halden Tista Sentrum",
+  "fullnavn" : "",
+  "tlfnr" : "",
+  "fraTime" : 23,
+  "fraMinut" : 43,
+  "tilTime" : 24,
+  "tilMinut" : 43
 } ]
