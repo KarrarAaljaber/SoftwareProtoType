@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -203,12 +204,16 @@ public class UserView {
                             }
 
 
+                        Alert s = new Alert(Alert.AlertType.NONE);
 
 
                         parkButtons[i][j].setOnAction(action -> {
 
                             BestillingView bv = new BestillingView(stage, vp, new Text(vp.getParkeringsplasser().get(finalX).getParkeringnavn()), new Text(parkButtons[finalI][finalJ].getText()), new Text(String.valueOf(vp.getParkeringsplasser().get(finalX).getPris())) );
                             bv.getConfirm().setOnAction(action2 ->{
+                                if(  !bv.getNavn().getText().equals("") && !bv.getTlf().getText().equals("") &&
+                                        bv.getSpinner().getValue() !=null && bv.getSpinner2().getValue() !=null &&
+                                        bv.getSpinner3().getValue() !=null && bv.getSpinner4().getValue() != null){
                                 parkButtonsBool[finalI][finalJ] = true;
 
                                bestillinger.add(new Bestilling(lp.getLoggedon(), Integer.parseInt( parkButtons[finalI][finalJ].getText()),vp.getParkeringsplasser().get(finalX).getParkeringnavn(), bv.getNavn().getText(), bv.getTlf().getText(), bv.getSpinner().getValue(),  bv.getSpinner2().getValue(),
@@ -217,7 +222,11 @@ public class UserView {
                                 repo.WriteToJSONBestilling("bestillinger.json", bestillinger);
 
                                 stage.setScene(scene);
-                            });
+                            }else{
+                                    s.setAlertType(Alert.AlertType.ERROR);
+                                    s.setContentText("All fields must be filled");
+                                    s.show();
+                                }});
                         });
 
                         buttonspane.add(parkButtons[i][j], j, i);
